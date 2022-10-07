@@ -4,15 +4,21 @@ import 'package:workingauth/auth/auth_wrapper.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
 import './providers/counter_provider.dart';
-import './theme/theme.dart';
+import './providers/theme_provider.dart';
+import 'package:json_theme/json_theme.dart';
+
+import 'package:flutter/services.dart'; // For rootBundle
+import 'dart:convert'; // For jsonDecode
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => Counter()),
+    ChangeNotifierProvider(create: (_) => Theme()),
   ], child: const MyApp()));
 }
 
@@ -21,9 +27,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
+  final themeJson = jsonDecode(themeStr);
+  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: myTheme,
+      theme: theme,
       home: const Auth(),
     );
   }

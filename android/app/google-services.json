@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "508361698170",
+    "project_id": "workingauth",
+    "storage_bucket": "workingauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508361698170:android:1cf4dfd46508c4befdc4c3",
+        "android_client_info": {
+          "package_name": "com.example.workingauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508361698170-n364a6flon11fddjhvfk7qjsfi6ma3cc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3Edk8CRvh0NIOYIH47uLiXkLogV-tO7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508361698170-n364a6flon11fddjhvfk7qjsfi6ma3cc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ import 'package:workingauth/auth/auth_wrapper.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
 import './providers/counter_provider.dart';
-import './providers/theme_provider.dart';
+import './theme/theme.dart';
 import 'package:json_theme/json_theme.dart';
 
 import 'package:flutter/services.dart'; // For rootBundle
@@ -16,20 +16,22 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => Counter()),
-    ChangeNotifierProvider(create: (_) => Theme()),
-  ], child: const MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
   final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
   final themeJson = jsonDecode(themeStr);
   final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => Counter()),
+  ], child: MyApp(theme: theme)));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key, this.theme});
+
+  final theme;
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme,

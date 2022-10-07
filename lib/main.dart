@@ -4,11 +4,9 @@ import 'package:workingauth/auth/auth_wrapper.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
 import './providers/counter_provider.dart';
-import './theme/theme.dart';
 import 'package:json_theme/json_theme.dart';
-
-import 'package:flutter/services.dart'; // For rootBundle
-import 'dart:convert'; // For jsonDecode
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:workingauth/pages/admin_homepage.dart';
 import 'package:workingauth/pages/client_homepage.dart';
 import 'package:workingauth/pages/signin_page.dart';
+import 'package:provider/provider.dart';
+import '../providers/userinfo_provider.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -12,10 +14,11 @@ class Auth extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.requireData?.email == 'alula.leakemariam94@gmail.com') {
+          context.read<UserInformation>().updateUserInfo(snapshot.data!);
+          if (snapshot.requireData?.email == 'lula.leakemariam94@gmail.com') {
             return const AdminHomePage(); // Admin
           } else {
-            return const ClientHomePage();
+            return ClientHomePage();
           }
         } else {
           return const SignInPage();

@@ -6,6 +6,7 @@ import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
 import './providers/counter_provider.dart';
 import './providers/bottomnav_provider.dart';
+import './providers/userinfo_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => Counter()),
     ChangeNotifierProvider(create: (_) => BottomNavSelect()),
+    ChangeNotifierProvider(create: (_) => UserInformation()),
   ], child: const MyApp()));
 }
 
@@ -25,9 +27,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: const Color(0xFF0F0F1E),
+        backgroundColor: const Color(0xFF0F0F1E),
       ),
       routes: {
         '/': (context) => const Auth(),

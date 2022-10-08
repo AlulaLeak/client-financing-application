@@ -10,28 +10,39 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const <Widget>[
+        children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 12, 12, 12),
             ),
-            child: Text(
-              'Drawer Header',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+            child: Column(
+              children: const [
+                Text(
+                  'Drawer Header Logo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+                Text(
+                  'Drawer Header Title',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ],
             ),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.message),
             title: Text('Messages'),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.account_circle),
             title: Text('Profile'),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
           ),

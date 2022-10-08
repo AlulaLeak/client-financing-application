@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workingauth/pages/profile_screen.dart';
+import '../providers/userinfo_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({
@@ -8,14 +10,22 @@ class ProfileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.person),
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Profile()),
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const Profile(),
+            transitionDuration: const Duration(seconds: 1),
+            transitionsBuilder: (_, a, __, c) =>
+                FadeTransition(opacity: a, child: c),
+          ),
         );
       },
+      child: CircleAvatar(
+        backgroundImage:
+            NetworkImage(context.watch<UserInformation>().photoUrl.toString()),
+      ),
     );
   }
 }

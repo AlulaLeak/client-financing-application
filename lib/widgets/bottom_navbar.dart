@@ -28,7 +28,6 @@ class BottomNavBar extends StatelessWidget {
       selectedItemColor: Colors.amber[800],
       onTap: (idx) {
         context.read<BottomNavSelect>().updateIndex(idx);
-        // Respond to item press.
       },
     );
   }

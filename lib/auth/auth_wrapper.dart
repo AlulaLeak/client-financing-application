@@ -13,11 +13,15 @@ class Auth extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.active) {
+          return const Center(child: CircularProgressIndicator());
+        }
         if (snapshot.hasData) {
-          context.read<UserInformation>().updateUserInfo(snapshot.data!);
           if (snapshot.requireData?.email == 'lula.leakemariam94@gmail.com') {
+            context.read<UserInformation>().updateUserInfo(snapshot.data!);
             return const AdminHomePage(); // Admin
           } else {
+            context.read<UserInformation>().updateUserInfo(snapshot.data!);
             return ClientHomePage();
           }
         } else {

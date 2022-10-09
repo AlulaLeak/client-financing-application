@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workingauth/widgets/welcome.dart';
 import '../widgets/side_menu.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/profile_icon.dart';
@@ -9,9 +10,7 @@ class ClientHomePage extends StatelessWidget {
   ClientHomePage({super.key});
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Center(
-      child: Text('Client Home Page 1'),
-    ),
+    const Welcome(),
     const Center(
       child: Text('Client Home Page 2'),
     ),

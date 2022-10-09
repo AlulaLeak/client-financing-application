@@ -27,22 +27,20 @@ class DocumentStatusCard extends StatelessWidget {
             ),
           ),
         ),
-        child: ListView.builder(
-            itemCount: 5,
+        child: ListView.separated(
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+            itemCount: 12,
             itemBuilder: (BuildContext ctxt, int index) {
               if (index == 0) {
                 return const Text(
-                  '🗓 Performa Bulan Ini',
+                  '- Uploaded Documents 📄',
                   style: TextStyle(
                     color: black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                );
-              }
-              if (index % 2 != 0) {
-                return const SizedBox(
-                  height: 16,
                 );
               }
               return Container(
@@ -69,16 +67,16 @@ class DocumentStatusCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children: const [
-                        Text("Kamu udah keluarin",
-                            style: TextStyle(
+                      children: [
+                        Text("Document $index",
+                            style: const TextStyle(
                                 color: black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500)),
-                        SizedBox(
+                        const SizedBox(
                           width: 2,
                         ),
-                        Text("Rp89rb",
+                        const Text("Rp89rb",
                             style: TextStyle(
                                 color: black,
                                 fontSize: 14,
@@ -89,28 +87,37 @@ class DocumentStatusCard extends StatelessWidget {
                       height: 2,
                     ),
                     Row(
-                      children: const [
-                        SizedBox(
+                      children: [
+                        const SizedBox(
                           width: 200,
                           child: Text(
-                            "Yuk, Bikin budget biar enggak overspend!",
+                            "Lorem ipsum dolor sit amet consectetur adipisicing",
                             style: TextStyle(
                                 color: grey,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text(
-                            '+ Buat Budget',
-                            style: TextStyle(
-                              color: primary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: index % 3 == 0 + index
+                              ? const Text(
+                                  'Upload +',
+                                  style: TextStyle(
+                                    color: primary,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              : const Text(
+                                  'Complete!',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ],
                     ),

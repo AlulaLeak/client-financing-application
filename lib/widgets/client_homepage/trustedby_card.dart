@@ -31,7 +31,7 @@ class TrustedByCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '💙 Fitur Menarik',
+            '- Trusted By 💙',
             style: TextStyle(
               color: black,
               fontSize: 20,
@@ -63,27 +63,13 @@ class TrustedByCard extends StatelessWidget {
                           height: 5.0,
                         ),
                         const Text(
-                          'Capaian',
+                          'Truckz Inc',
                           style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w400,
                               fontSize: 14),
                         ),
                       ],
-                    ),
-                    const Positioned(
-                      left: 33,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: red,
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -103,27 +89,13 @@ class TrustedByCard extends StatelessWidget {
                           height: 5.0,
                         ),
                         const Text(
-                          'Ajak Teman',
+                          'Rigz Inc',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
                               fontSize: 14),
                         ),
                       ],
-                    ),
-                    const Positioned(
-                      left: 46,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -143,27 +115,13 @@ class TrustedByCard extends StatelessWidget {
                           height: 5.0,
                         ),
                         const Text(
-                          'Insight\nKamu',
+                          'Trucks Inc',
                           style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w400,
                               fontSize: 14),
                         ),
                       ],
-                    ),
-                    const Positioned(
-                      left: 52,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: red,
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -181,7 +139,7 @@ class TrustedByCard extends StatelessWidget {
                       height: 5.0,
                     ),
                     const Text(
-                      'Bayar\nTagihan',
+                      'Truck Inc',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: black,
@@ -191,6 +149,17 @@ class TrustedByCard extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+          ),
+          const Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              '...and many more!',
+              style: TextStyle(
+                color: black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

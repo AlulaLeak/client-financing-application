@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:workingauth/pages/admin_homepage.dart';
-import 'package:workingauth/pages/client_homepage.dart';
+import 'package:workingauth/pages/client_app.dart';
 import 'package:workingauth/pages/signin_page.dart';
 import 'package:provider/provider.dart';
 import '../providers/userinfo_provider.dart';
@@ -22,7 +22,7 @@ class Auth extends StatelessWidget {
             return const AdminHomePage(); // Admin
           } else {
             context.read<UserInformation>().updateUserInfo(snapshot.data!);
-            return ClientHomePage();
+            return ClientApp();
           }
         } else {
           return const SignInPage();

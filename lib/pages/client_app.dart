@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:workingauth/widgets/welcome.dart';
+import 'package:workingauth/widgets/client_homepage/client_homepage.dart';
 import '../widgets/side_menu.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/profile_icon.dart';
 import '../providers/bottomnav_provider.dart';
 import 'package:provider/provider.dart';
 
-class ClientHomePage extends StatelessWidget {
-  ClientHomePage({super.key});
+class ClientApp extends StatelessWidget {
+  ClientApp({super.key});
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Welcome(),
+    const ClientHomePage(),
     const Center(
-      child: Text('Client Home Page 2'),
+      child: Text('Client App Page 2'),
     ),
     const Center(
-      child: Text('Client Home Page 3'),
+      child: Text('Client App Page 3'),
     ),
   ];
 
@@ -23,7 +23,7 @@ class ClientHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Client Home Page'),
+          title: const Text('Client App'),
           actions: [
             const ProfileIcon(),
             IconButton(onPressed: () {}, icon: const Icon(Icons.notifications))

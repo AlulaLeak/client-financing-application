@@ -9,8 +9,7 @@ class DocumentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 2),
-      padding: const EdgeInsets.only(left: 14, right: 8, top: 11),
+      padding: const EdgeInsets.only(left: 20, right: 6, top: 20),
       width: double.infinity,
       height: 90,
       decoration: BoxDecoration(
@@ -36,16 +35,16 @@ class DocumentCard extends StatelessWidget {
         border: Border.all(width: 2, color: secondary),
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text("Document $index",
-              style: const TextStyle(
-                  color: black, fontSize: 14, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 8),
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text("Document $index",
+                  style: const TextStyle(
+                      color: black, fontSize: 14, fontWeight: FontWeight.w500)),
+              const SizedBox(height: 3),
               const SizedBox(
                 width: 200,
                 child: Text(
@@ -54,32 +53,38 @@ class DocumentCard extends StatelessWidget {
                       color: grey, fontSize: 12, fontWeight: FontWeight.w500),
                 ),
               ),
-              const Spacer(),
-              Container(
-                margin: const EdgeInsets.only(right: 7),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: index % 3 == 0 + index
-                      ? const Text(
-                          'Upload +',
-                          style: TextStyle(
-                            color: primary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      : const Text(
-                          'Complete!',
-                          style: TextStyle(
-                            color: green,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                ),
-              ),
             ],
           ),
+          const Spacer(),
+          Column(children: [
+            index % 3 == 0 + index
+                ? TextButton(
+                    onPressed: () {
+                      print('Pressed!!');
+                    },
+                    child: const Text(
+                      'Upload +',
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : TextButton(
+                    onPressed: () {
+                      print('Pressed!!');
+                    },
+                    child: const Text(
+                      'Complete!',
+                      style: TextStyle(
+                        color: green,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+          ])
         ],
       ),
     );

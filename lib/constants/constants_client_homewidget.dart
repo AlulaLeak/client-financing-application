@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //Color
-const scaffoldbg = Color.fromARGB(255, 255, 200, 255);
+// const scaffoldbg = Color.fromARGB(255, 255, 200, 255);
+const scaffoldbg = Color.fromARGB(255, 0, 115, 209);
 const black = Color.fromARGB(255, 0, 0, 0);
 const grey = CupertinoColors.systemGrey;
 const primary = Color.fromARGB(255, 20, 20, 20);

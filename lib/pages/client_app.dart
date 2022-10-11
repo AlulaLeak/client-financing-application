@@ -38,13 +38,14 @@ class ClientApp extends StatelessWidget {
               "name": context.read<UserInformation>().name,
               "email": context.read<UserInformation>().email,
               "photoUrl": context.read<UserInformation>().photoUrl,
+              "created_at": DateTime.now(),
             };
             db.collection("users").add(user);
           }
         }
         return Scaffold(
             appBar: AppBar(
-              title: const Text('Client App'),
+              title: const Text("Finance Your Truck"),
               actions: [
                 IconButton(
                     onPressed: () {}, icon: const Icon(Icons.notifications)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './picture_slider.dart';
 import './welcome_and_progress.dart';
-import './document_status_card.dart';
+import 'document_status_cardlist.dart';
 import './trustedby_card.dart';
 import './extrainfo_card.dart';
 import '../../constants/constants_client_homewidget.dart';

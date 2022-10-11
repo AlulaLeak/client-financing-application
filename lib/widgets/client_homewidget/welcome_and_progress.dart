@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workingauth/widgets/profile_icon.dart';
 import '../../providers/userinfo_provider.dart';
 import 'package:provider/provider.dart';
 import '../../constants/constants_client_homewidget.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../config/utils.dart';
+import '../../constants/constants_client_homewidget.dart';
 
 class ExtraInfoCard extends StatelessWidget {
   const ExtraInfoCard({
@@ -28,7 +28,7 @@ class ExtraInfoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Gimana sih cara pake Finku?',
+            'Lorem ipsum something something?',
             style: TextStyle(
               color: Colors.black,
               fontSize: 15,
@@ -41,7 +41,7 @@ class ExtraInfoCard extends StatelessWidget {
           Row(
             children: const [
               Text(
-                'Pelajari bareng Fin-E!',
+                'Blah blah bla lorem!',
                 style: TextStyle(
                   color: primary,
                   fontSize: 14,

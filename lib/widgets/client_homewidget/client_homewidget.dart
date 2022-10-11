@@ -4,11 +4,10 @@ import './welcome_and_progress.dart';
 import './document_status_card.dart';
 import './trustedby_card.dart';
 import './extrainfo_card.dart';
+import '../../constants/constants_client_homewidget.dart';
 
-import '../../config/utils.dart';
-
-class ClientHomePage extends StatelessWidget {
-  const ClientHomePage({super.key});
+class ClientHomeWidget extends StatelessWidget {
+  const ClientHomeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

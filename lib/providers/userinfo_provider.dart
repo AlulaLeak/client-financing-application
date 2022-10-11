@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserInformation with ChangeNotifier {
+  final db = FirebaseFirestore.instance;
+
   String? _name;
   String? _email;
   String? _uid;

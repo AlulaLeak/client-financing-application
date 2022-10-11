@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../config/utils.dart';
+import '../../constants/constants_client_homewidget.dart';
 
 class TrustedByCard extends StatelessWidget {
   const TrustedByCard({

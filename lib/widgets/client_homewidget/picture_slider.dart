@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../config/utils.dart';
+import '../../constants/constants_client_homewidget.dart';
+import '../../scripts/scripts_homepage.dart';
 
 class PictureSlider extends StatefulWidget {
   const PictureSlider({super.key});

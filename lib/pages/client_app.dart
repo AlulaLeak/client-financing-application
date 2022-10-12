@@ -45,7 +45,7 @@ class ClientApp extends StatelessWidget {
         }
         return Scaffold(
             appBar: AppBar(
-              title: const Text("Finance Your Truck"),
+              title: const Text("Aman's Truck Financing App"),
               actions: [
                 IconButton(
                     onPressed: () {}, icon: const Icon(Icons.notifications)),

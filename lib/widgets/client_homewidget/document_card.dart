@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import '../../constants/constants_client_homewidget.dart';
+import 'package:file_picker/file_picker.dart';
+import '../upload_confirmation.dart';
 
-class DocumentCard extends StatelessWidget {
-  const DocumentCard({Key? key, this.index = 0}) : super(key: key);
+class DocumentCard extends StatefulWidget {
+  DocumentCard({Key? key, this.index = 0}) : super(key: key);
 
   final int index;
+
+  @override
+  State<DocumentCard> createState() => _DocumentCardState();
+}
+
+class _DocumentCardState extends State<DocumentCard> {
+  String _path = '';
+  String _fileName = '';
+
+  Future<void> _setFile(String filePath, String fileName) async {
+    setState(() {
+      _path = filePath;
+      _fileName = fileName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +39,14 @@ class DocumentCard extends StatelessWidget {
         gradient: LinearGradient(
             colors: [
               const Color.fromARGB(255, 255, 255, 255),
-              index % 3 == 0 + index
+              widget.index % 3 == 0 + widget.index
                   ? white
                   : const Color.fromARGB(255, 222, 245, 223)
             ],
             begin: Alignment.centerRight,
             end: const Alignment(0.005, 0.0),
             tileMode: TileMode.clamp),
-        color: index % 3 == 0 + index
+        color: widget.index % 3 == 0 + widget.index
             ? white
             : const Color.fromARGB(255, 222, 245, 223),
         border: Border.all(width: 2, color: secondary),
@@ -41,7 +58,7 @@ class DocumentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Document $index",
+              Text("Document ${widget.index}",
                   style: const TextStyle(
                       color: black, fontSize: 14, fontWeight: FontWeight.w500)),
               const SizedBox(height: 3),
@@ -57,10 +74,15 @@ class DocumentCard extends StatelessWidget {
           ),
           const Spacer(),
           Column(children: [
-            index % 3 == 0 + index
+            widget.index % 3 == 0 + widget.index
                 ? TextButton(
-                    onPressed: () {
-                      print('Pressed!!');
+                    onPressed: () async {
+                      var picked = await FilePicker.platform.pickFiles();
+                      if (picked != null) {
+                        _setFile(picked.files.single.path!,
+                            picked.files.single.name);
+                        uploadConfirmation(context, _path, _fileName);
+                      }
                     },
                     child: const Text(
                       'Upload +',

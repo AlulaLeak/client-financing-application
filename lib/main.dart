@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import './providers/counter_provider.dart';
 import './providers/bottomnav_provider.dart';
 import './providers/userinfo_provider.dart';
+import './providers/file_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => Counter()),
     ChangeNotifierProvider(create: (_) => BottomNavSelect()),
     ChangeNotifierProvider(create: (_) => UserInformation()),
+    ChangeNotifierProvider(create: (_) => FileToUpload()),
   ], child: const MyApp()));
 }
 

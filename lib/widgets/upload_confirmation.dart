@@ -3,23 +3,25 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:provider/provider.dart';
+import '../providers/userinfo_provider.dart';
 
 void uploadConfirmation(BuildContext context, path, fileName) async {
+  final user =
+      Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget remindButton = TextButton(
     child: const Text("Cancel"),
-    onPressed: () {},
-  );
-  Widget cancelButton = TextButton(
-    child: const Text("Remind me later"),
-    onPressed: () {},
+    onPressed: () {
+      Navigator.pop(context);
+    },
   );
   Widget launchButton = TextButton(
-    child: const Text("Launch missile"),
+    child: const Text("Upload file"),
     onPressed: () async {
       final UploadTask uploadTask;
       final storage =
           FirebaseStorage.instanceFor(bucket: "gs://workingauth.appspot.com");
-      final ref = storage.ref().child(fileName);
+      final ref = storage.ref().child(user).child(fileName);
       final metadata = SettableMetadata(
         // contentType: 'application/pdf',
         contentType: 'image/png',
@@ -32,6 +34,8 @@ void uploadConfirmation(BuildContext context, path, fileName) async {
       } else {
         ref.putFile(File(path), metadata);
       }
+      // MUST ALSO UPDATE THE DATABASE WITH THE FILE NAME!!
+      Navigator.pop(context);
     },
   );
   // set up the AlertDialog
@@ -41,7 +45,6 @@ void uploadConfirmation(BuildContext context, path, fileName) async {
         "Launching this missile will destroy the entire universe. Is this what you intended to do?"),
     actions: [
       remindButton,
-      cancelButton,
       launchButton,
     ],
   );

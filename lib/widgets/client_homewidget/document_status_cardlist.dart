@@ -61,3 +61,7 @@ class DocumentStatusCard extends StatelessWidget {
             }));
   }
 }
+
+
+
+// user!.docs[0].get(widget.document)

@@ -27,16 +27,16 @@ class ClientHomeWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
                 child: Column(
-                  children: const [
+                  children: [
                     WelcomeAndProgressCircle(),
-                    SizedBox(height: 20.0),
-                    PictureSlider(),
-                    SizedBox(height: 20.0),
-                    DocumentStatusCard(),
-                    SizedBox(height: 20.0),
-                    TrustedByCard(),
-                    SizedBox(height: 20.0),
-                    ExtraInfoCard(),
+                    const SizedBox(height: 20.0),
+                    const PictureSlider(),
+                    const SizedBox(height: 20.0),
+                    const DocumentStatusCard(),
+                    const SizedBox(height: 20.0),
+                    const TrustedByCard(),
+                    const SizedBox(height: 20.0),
+                    const ExtraInfoCard(),
                   ],
                 ),
               ),

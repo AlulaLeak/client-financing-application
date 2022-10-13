@@ -16,13 +16,18 @@ class UserInformation with ChangeNotifier {
   String? get uid => _uid;
 
   void updateUserInfo(User user) {
-    _name = user.displayName;
-    _email = user.email;
+    if (user.displayName != null) {
+      _name = user.displayName;
+    } else {
+      _name = 'User';
+    }
+
     if (user.photoURL != null) {
       _photoUrl = user.photoURL;
     } else {
       _photoUrl = 'https://via.placeholder.com/150';
     }
+    _email = user.email;
     _uid = user.uid;
     notifyListeners();
   }

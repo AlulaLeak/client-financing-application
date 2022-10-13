@@ -4,7 +4,6 @@ import 'package:workingauth/pages/auth_page.dart';
 import 'package:workingauth/pages/profile_screen.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
-import './providers/counter_provider.dart';
 import './providers/bottomnav_provider.dart';
 import './providers/userinfo_provider.dart';
 import './providers/file_provider.dart';
@@ -16,7 +15,6 @@ Future<void> main() async {
   );
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => Counter()),
     ChangeNotifierProvider(create: (_) => BottomNavSelect()),
     ChangeNotifierProvider(create: (_) => UserInformation()),
     ChangeNotifierProvider(create: (_) => FileToUpload()),

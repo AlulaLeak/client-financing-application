@@ -20,12 +20,6 @@ class ClientHomeWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 400),
                 child: Container(
-                  // decoration: const BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage("assets/placeholder.jpg"),
-                  //     fit: BoxFit.fitHeight,
-                  //   ),
-                  // ),
                   height: 700,
                   color: scaffoldbg,
                 ),

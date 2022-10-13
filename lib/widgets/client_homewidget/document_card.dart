@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import '../../constants/constants_client_homewidget.dart';
 import 'package:file_picker/file_picker.dart';
 import '../upload_confirmation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DocumentCard extends StatefulWidget {
-  DocumentCard({Key? key, this.index = 0}) : super(key: key);
+  const DocumentCard({Key? key, this.index = 0, this.document, this.user})
+      : super(key: key);
 
   final int index;
+  final String? document;
+  final QuerySnapshot<Object?>? user;
 
   @override
   State<DocumentCard> createState() => _DocumentCardState();
@@ -25,6 +29,10 @@ class _DocumentCardState extends State<DocumentCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "jdjd --------------- ${widget.user!.docs[0].get(widget.document.toString())}");
+    // document -
+    // print("widget.user: ${data}");
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 6, top: 20),
       width: double.infinity,
@@ -39,7 +47,7 @@ class _DocumentCardState extends State<DocumentCard> {
         gradient: LinearGradient(
             colors: [
               const Color.fromARGB(255, 255, 255, 255),
-              widget.index % 3 == 0 + widget.index
+              widget.user!.docs[0].get(widget.document.toString()) == null
                   ? white
                   : const Color.fromARGB(255, 222, 245, 223)
             ],
@@ -58,7 +66,7 @@ class _DocumentCardState extends State<DocumentCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Document ${widget.index}",
+              Text("Document ${widget.document}",
                   style: const TextStyle(
                       color: black, fontSize: 14, fontWeight: FontWeight.w500)),
               const SizedBox(height: 3),
@@ -74,14 +82,15 @@ class _DocumentCardState extends State<DocumentCard> {
           ),
           const Spacer(),
           Column(children: [
-            widget.index % 3 == 0 + widget.index
+            widget.user!.docs[0].get(widget.document.toString()) == null
                 ? TextButton(
                     onPressed: () async {
                       var picked = await FilePicker.platform.pickFiles();
                       if (picked != null) {
                         _setFile(picked.files.single.path!,
                             picked.files.single.name);
-                        uploadConfirmation(context, _path, _fileName);
+                        uploadConfirmation(
+                            context, _path, _fileName, widget.document);
                       }
                     },
                     child: const Text(
@@ -94,9 +103,7 @@ class _DocumentCardState extends State<DocumentCard> {
                     ),
                   )
                 : TextButton(
-                    onPressed: () {
-                      print('Pressed!!');
-                    },
+                    onPressed: () {},
                     child: const Text(
                       'Complete!',
                       style: TextStyle(

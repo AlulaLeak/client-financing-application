@@ -13,7 +13,6 @@ class Auth extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // print('UserData: ${snapshot.data?.uid}');
         if (snapshot.connectionState != ConnectionState.active) {
           return const Center(child: CircularProgressIndicator());
         }

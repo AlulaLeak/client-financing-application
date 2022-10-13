@@ -38,9 +38,17 @@ class ClientApp extends StatelessWidget {
               "name": context.read<UserInformation>().name,
               "email": context.read<UserInformation>().email,
               "photoUrl": context.read<UserInformation>().photoUrl,
+              "doc_1": null,
+              "doc_2": null,
+              "doc_3": null,
+              "doc_4": null,
+              "doc_5": null,
               "created_at": DateTime.now(),
             };
-            db.collection("users").add(user);
+            db
+                .collection("users")
+                .doc(context.read<UserInformation>().uid)
+                .set(user);
           }
         }
         return Scaffold(

@@ -5,26 +5,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
 import '../providers/userinfo_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void uploadConfirmation(BuildContext context, path, fileName) async {
+void uploadConfirmation(BuildContext context, String path, String fileName,
+    String? fileType) async {
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
-  Widget remindButton = TextButton(
+  Widget cancelButton = TextButton(
     child: const Text("Cancel"),
     onPressed: () {
       Navigator.pop(context);
     },
   );
-  Widget launchButton = TextButton(
+  Widget uploadButton = TextButton(
     child: const Text("Upload file"),
     onPressed: () async {
-      final UploadTask uploadTask;
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(context.read<UserInformation>().uid)
+          .update({fileType.toString(): fileName.toString()});
+
       final storage =
           FirebaseStorage.instanceFor(bucket: "gs://workingauth.appspot.com");
-      final ref = storage.ref().child(user).child(fileName);
+      final ref =
+          storage.ref().child(user).child(fileType.toString()).child(fileName);
       final metadata = SettableMetadata(
-        // contentType: 'application/pdf',
-        contentType: 'image/png',
         customMetadata: {'picked-file-path': path},
       );
       if (kIsWeb) {
@@ -34,7 +39,6 @@ void uploadConfirmation(BuildContext context, path, fileName) async {
       } else {
         ref.putFile(File(path), metadata);
       }
-      // MUST ALSO UPDATE THE DATABASE WITH THE FILE NAME!!
       Navigator.pop(context);
     },
   );
@@ -44,8 +48,8 @@ void uploadConfirmation(BuildContext context, path, fileName) async {
     content: const Text(
         "Launching this missile will destroy the entire universe. Is this what you intended to do?"),
     actions: [
-      remindButton,
-      launchButton,
+      cancelButton,
+      uploadButton,
     ],
   );
   // show the dialog

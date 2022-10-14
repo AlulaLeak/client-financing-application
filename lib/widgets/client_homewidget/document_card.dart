@@ -29,10 +29,6 @@ class _DocumentCardState extends State<DocumentCard> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "jdjd --------------- ${widget.user!.docs[0].get(widget.document.toString())}");
-    // document -
-    // print("widget.user: ${data}");
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 6, top: 20),
       width: double.infinity,

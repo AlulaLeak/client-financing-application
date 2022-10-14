@@ -48,31 +48,25 @@ class ClientApp extends StatelessWidget {
             db
                 .collection("users")
                 .doc(context.read<UserInformation>().uid)
-                .set(user)
-                .then((value) => const Text('data'));
+                .set(user);
           }
         }
-        return FutureBuilder<Object>(
-            future: null,
-            builder: (context, snapshot) {
-              return Scaffold(
-                  appBar: AppBar(
-                    title: const Text("Aman's Truck Financing App"),
-                    actions: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.notifications)),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const ProfileIcon(),
-                      ),
-                    ],
-                  ),
-                  body: _widgetOptions.elementAt(
-                      context.watch<BottomNavSelect>().selectedIndex),
-                  drawer: const SideMenu(),
-                  bottomNavigationBar: const BottomNavBar());
-            });
+        return Scaffold(
+            appBar: AppBar(
+              title: const Text("Aman's Truck Financing App"),
+              actions: [
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.notifications)),
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: const ProfileIcon(),
+                ),
+              ],
+            ),
+            body: _widgetOptions
+                .elementAt(context.watch<BottomNavSelect>().selectedIndex),
+            drawer: const SideMenu(),
+            bottomNavigationBar: const BottomNavBar());
       },
     );
   }

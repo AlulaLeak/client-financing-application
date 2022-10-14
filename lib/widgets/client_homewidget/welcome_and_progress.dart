@@ -47,43 +47,54 @@ class WelcomeAndProgressCircle extends StatelessWidget {
                 .where('uid', isEqualTo: context.watch<UserInformation>().uid)
                 .snapshots(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {}
-              return Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 15),
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: 6,
-                      value: _completedDocuments(snapshot),
-                      backgroundColor: white,
-                      valueColor: const AlwaysStoppedAnimation<Color>(green),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 2),
-                    child: Column(
-                      children: [
-                        Text(
-                          "${_completedDocuments(snapshot) * 100}%",
-                          style: const TextStyle(
-                            color: white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+              if (snapshot.hasData) {
+                if (snapshot.data!.size > 0) {
+                  print('This is happening -------------------');
+                  return Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 6,
+                          value: _completedDocuments(snapshot),
+                          backgroundColor: white,
+                          valueColor:
+                              const AlwaysStoppedAnimation<Color>(green),
                         ),
-                        const Text(
-                          "Completed",
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 2),
+                        child: Column(
+                          children: [
+                            Text(
+                              "${_completedDocuments(snapshot) * 100}%",
+                              style: const TextStyle(
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              "Completed",
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              );
+                      )
+                    ],
+                  );
+                } else {
+                  return const Text('No data...');
+                }
+              } else {
+                return const Center(
+                  child: Text('Loading...'),
+                );
+              }
             }),
       ],
     );

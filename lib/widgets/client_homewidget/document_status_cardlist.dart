@@ -35,33 +35,35 @@ class DocumentStatusCard extends StatelessWidget {
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListView.separated(
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemCount: documents.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == 0) {
-                        return const Text(
-                          '- Uploaded Documents 📄',
-                          style: TextStyle(
-                              color: black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              backgroundColor: white),
-                        );
-                      } else {
-                        return DocumentCard(
-                            index: index,
-                            document: documents[index],
-                            user: snapshot.data);
-                      }
-                    });
+                if (snapshot.data!.size > 0) {
+                  return ListView.separated(
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: documents.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == 0) {
+                          return const Text(
+                            '- Uploaded Documents 📄',
+                            style: TextStyle(
+                                color: black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                backgroundColor: white),
+                          );
+                        } else {
+                          return DocumentCard(
+                              index: index,
+                              document: documents[index],
+                              user: snapshot.data);
+                        }
+                      });
+                } else {
+                  return const Text('Loading...');
+                }
               } else {
-                return const Text('No data...');
+                return const Center(
+                  child: Text('Loading...'),
+                );
               }
             }));
   }
 }
-
-
-
-// user!.docs[0].get(widget.document)

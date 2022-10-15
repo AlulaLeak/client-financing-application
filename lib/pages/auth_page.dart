@@ -8,26 +8,38 @@ import '../providers/userinfo_provider.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.active) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasData) {
-          if (snapshot.requireData?.email == 'lula.leakemariam94@gmail.com') {
-            context.read<UserInformation>().updateUserInfo(snapshot.data!);
-            return const AdminHomePage(); // Admin
-          } else {
-            context.read<UserInformation>().updateUserInfo(snapshot.data!);
-            return ClientApp();
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            return const Center(child: CircularProgressIndicator());
           }
-        } else {
-          return const SignInPage();
-        }
-      },
-    );
+          if (snapshot.hasData) {
+            return FutureBuilder(
+              future: context
+                  .read<UserInformation>()
+                  .updateUserInfo(snapshot.data!),
+              builder: (BuildContext context, AsyncSnapshot snap) {
+                if (snapshot.requireData?.email ==
+                    'lula.leakemariam94@gmail.com') {
+                  context
+                      .read<UserInformation>()
+                      .updateUserInfo(snapshot.data!);
+                  return const AdminHomePage(); // Admin
+                } else {
+                  context
+                      .read<UserInformation>()
+                      .updateUserInfo(snapshot.data!);
+                  return ClientApp();
+                }
+              },
+            );
+          } else {
+            return const SignInPage();
+          }
+        });
   }
 }

@@ -12,7 +12,7 @@ class UserInformation with ChangeNotifier {
   String? get email => _email;
   String? get uid => _uid;
 
-  void updateUserInfo(User user) {
+  Future updateUserInfo(User user) async {
     if (user.displayName != null) {
       _name = user.displayName;
     } else {

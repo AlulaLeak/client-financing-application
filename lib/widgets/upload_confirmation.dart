@@ -8,7 +8,7 @@ import '../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void uploadConfirmation(BuildContext context, String path, String fileName,
-    String? fileType) async {
+    String? fileType, Uint8List bytes) async {
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget cancelButton = TextButton(
@@ -33,9 +33,9 @@ void uploadConfirmation(BuildContext context, String path, String fileName,
         customMetadata: {'picked-file-path': path},
       );
       if (kIsWeb) {
-        ByteData bytes = await rootBundle.load(path);
-        Uint8List bytez = bytes.buffer.asUint8List();
-        ref.putData(bytez, metadata);
+        // ByteData bytes = await rootBundle.load(path);
+        // Uint8List bytez = bytes.buffer.asUint8List();
+        ref.putData(bytes, metadata);
       } else {
         ref.putFile(File(path), metadata);
       }

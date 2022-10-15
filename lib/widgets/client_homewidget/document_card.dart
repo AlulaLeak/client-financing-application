@@ -3,6 +3,21 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:file_picker/file_picker.dart';
 import '../upload_confirmation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:typed_data';
+
+class MyCustomClass {
+  const MyCustomClass();
+
+  Future<void> myAsyncMethod(
+      BuildContext context, setFile, VoidCallback onSuccess) async {
+    var picked = await FilePicker.platform.pickFiles();
+    if (picked != null) {
+      await setFile(picked.files.single.path!, picked.files.single.name,
+          picked.files.single.bytes);
+      onSuccess.call();
+    }
+  }
+}
 
 class DocumentCard extends StatefulWidget {
   const DocumentCard({Key? key, this.index = 0, this.document, this.user})
@@ -19,11 +34,14 @@ class DocumentCard extends StatefulWidget {
 class _DocumentCardState extends State<DocumentCard> {
   String _path = '';
   String _fileName = '';
+  late Uint8List _bytes;
 
-  Future<void> _setFile(String filePath, String fileName) async {
+  Future<void> _setFile(
+      String filePath, String fileName, Uint8List bytes) async {
     setState(() {
       _path = filePath;
       _fileName = fileName;
+      _bytes = bytes;
     });
   }
 
@@ -80,15 +98,11 @@ class _DocumentCardState extends State<DocumentCard> {
           Column(children: [
             widget.user!.docs[0].get(widget.document.toString()) == null
                 ? TextButton(
-                    onPressed: () async {
-                      var picked = await FilePicker.platform.pickFiles();
-                      if (picked != null) {
-                        _setFile(picked.files.single.path!,
-                            picked.files.single.name);
-                        uploadConfirmation(
-                            context, _path, _fileName, widget.document);
-                      }
-                    },
+                    onPressed: () => const MyCustomClass()
+                        .myAsyncMethod(context, _setFile, () {
+                      uploadConfirmation(
+                          context, _path, _fileName, widget.document, _bytes);
+                    }),
                     child: const Text(
                       'Upload +',
                       style: TextStyle(
@@ -115,3 +129,11 @@ class _DocumentCardState extends State<DocumentCard> {
     );
   }
 }
+
+// var picked = await FilePicker.platform.pickFiles();
+// if (picked != null) {
+//   _setFile(picked.files.single.path!,
+//       picked.files.single.name);
+//   uploadConfirmation(
+//       context, _path, _fileName, widget.document);
+// }

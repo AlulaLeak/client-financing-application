@@ -4,9 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import '../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-void uploadConfirmation(BuildContext context, String fileName, String? fileType,
-    Uint8List bytes) async {
+void uploadConfirmation(
+  BuildContext context,
+  String fileName,
+  String? fileType,
+  Uint8List bytes,
+  String filePath,
+) async {
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget cancelButton = TextButton(
@@ -27,9 +33,15 @@ void uploadConfirmation(BuildContext context, String fileName, String? fileType,
           FirebaseStorage.instanceFor(bucket: "gs://workingauth.appspot.com");
       final ref =
           storage.ref().child(user).child(fileType.toString()).child(fileName);
-      // ByteData bytes = await rootBundle.load(path);
-      // Uint8List bytez = bytes.buffer.asUint8List();
-      ref.putData(bytes);
+      final metadata = SettableMetadata(
+        customMetadata: {'picked-file-path': filePath},
+      );
+      if (kIsWeb) {
+        ref.putData(bytes);
+      } else {
+        ref.putFile(File(filePath), metadata);
+      }
+
       Navigator.pop(context);
     },
   );

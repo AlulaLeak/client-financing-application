@@ -10,10 +10,9 @@ class MyCustomClass {
 
   Future<void> myAsyncMethod(
       BuildContext context, setFile, VoidCallback onSuccess) async {
-    var picked = await FilePicker.platform.pickFiles();
+    var picked = await FilePicker.platform.pickFiles(type: FileType.any);
     if (picked != null) {
-      await setFile(picked.files.single.path!, picked.files.single.name,
-          picked.files.single.bytes);
+      await setFile(picked.files.single.name, picked.files.single.bytes);
       onSuccess.call();
     }
   }
@@ -32,14 +31,11 @@ class DocumentCard extends StatefulWidget {
 }
 
 class _DocumentCardState extends State<DocumentCard> {
-  String _path = '';
   String _fileName = '';
   late Uint8List _bytes;
 
-  Future<void> _setFile(
-      String filePath, String fileName, Uint8List bytes) async {
+  Future<void> _setFile(String fileName, Uint8List bytes) async {
     setState(() {
-      _path = filePath;
       _fileName = fileName;
       _bytes = bytes;
     });
@@ -101,7 +97,7 @@ class _DocumentCardState extends State<DocumentCard> {
                     onPressed: () => const MyCustomClass()
                         .myAsyncMethod(context, _setFile, () {
                       uploadConfirmation(
-                          context, _path, _fileName, widget.document, _bytes);
+                          context, _fileName, widget.document, _bytes);
                     }),
                     child: const Text(
                       'Upload +',

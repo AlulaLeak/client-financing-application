@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../constants/constants_client_homewidget.dart';
 import '../../constants/constants_documents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import './picture_slider.dart';
 
 class WelcomeAndProgressCircle extends StatelessWidget {
   WelcomeAndProgressCircle({super.key});
@@ -28,62 +29,81 @@ class WelcomeAndProgressCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          "Hello, \n ${context.watch<UserInformation>().name.toString()}!",
-          style: const TextStyle(
-            color: white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const Spacer(),
-        StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("users")
-                .where('uid', isEqualTo: context.watch<UserInformation>().uid)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {}
-              return Column(
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection("users")
+          .where('uid', isEqualTo: context.watch<UserInformation>().uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Text(
+                  "Hello, \n ${context.watch<UserInformation>().name.toString()}!",
+                  style: const TextStyle(
+                    color: white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  width: 110,
+                ),
+              ]),
+              const SizedBox(
+                height: 30,
+              ),
+              const PictureSlider(),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 15),
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: 6,
-                      value: _completedDocuments(snapshot),
-                      backgroundColor: white,
-                      valueColor: const AlwaysStoppedAnimation<Color>(green),
+                  const Text(
+                    "You are almost done \n with your application!",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.white70,
+                      fontSize: 19,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 2),
-                    child: Column(
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        CircularProgressIndicator.adaptive(
+                          strokeWidth: 6,
+                          value: _completedDocuments(snapshot),
+                          backgroundColor: white,
+                          valueColor:
+                              const AlwaysStoppedAnimation<Color>(green),
+                        ),
+                        const SizedBox(
+                          width: 11,
+                        ),
                         Text(
-                          "${_completedDocuments(snapshot) * 100}%",
+                          "${_completedDocuments(snapshot) * 100} %",
                           style: const TextStyle(
                             color: white,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Text(
-                          "Completed",
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                      ]),
                 ],
-              );
-            }),
-      ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

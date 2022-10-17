@@ -12,7 +12,7 @@ class ClientApp extends StatelessWidget {
   ClientApp({super.key});
 
   final List<Widget> _widgetOptions = <Widget>[
-    const ClientHomeWidget(),
+    ClientHomeWidget(),
     const Center(
       child: Text('Client App Page 2'),
     ),

@@ -17,22 +17,14 @@ class ClientHomeWidget extends StatelessWidget {
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 400),
-              //   child: Container(
-              //     height: 700,
-              //     color: scaffoldbg,
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5, top: 50),
                 child: Column(
                   children: [
                     WelcomeAndProgressCircle(),
                     const SizedBox(height: 20.0),
-                    const PictureSlider(),
-                    const SizedBox(height: 20.0),
-                    // const DocumentStatusCard(),
+                    // const PictureSlider(),
+                    // const SizedBox(height: 20.0),
                     const DocumentStatusCard(),
                     const SizedBox(height: 20.0),
                     const TrustedByCard(),

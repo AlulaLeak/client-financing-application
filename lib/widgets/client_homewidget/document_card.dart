@@ -61,27 +61,17 @@ class _DocumentCardState extends State<DocumentCard> {
       width: double.infinity,
       height: 90,
       decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(61, 209, 209, 209),
-            offset: Offset(3.0, 2.0),
-          ),
-        ],
         gradient: LinearGradient(
             colors: [
               const Color.fromARGB(255, 255, 255, 255),
               widget.user!.docs[0].get(widget.document.toString()) == null
                   ? white
-                  : const Color.fromARGB(255, 222, 245, 223)
+                  : const Color.fromARGB(255, 162, 255, 167)
             ],
             begin: Alignment.centerRight,
             end: const Alignment(0.005, 0.0),
             tileMode: TileMode.clamp),
-        color: widget.index % 3 == 0 + widget.index
-            ? white
-            : const Color.fromARGB(255, 222, 245, 223),
-        border: Border.all(width: 2, color: secondary),
-        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(1.0)),
       ),
       child: Row(
         children: [

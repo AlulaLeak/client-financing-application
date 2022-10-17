@@ -16,18 +16,7 @@ class DocumentStatusCard extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(16),
         height: 600.0,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 4,
-              blurRadius: 5,
-              offset: const Offset(0, 7),
-            ),
-          ],
-          color: white,
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-        ),
+        color: primary,
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("users")
@@ -42,12 +31,12 @@ class DocumentStatusCard extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       if (index == 0) {
                         return const Text(
-                          '- Uploaded Documents 📄',
+                          ' Uploaded Documents 📄',
                           style: TextStyle(
-                              color: black,
+                              color: white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              backgroundColor: white),
+                              backgroundColor: primary),
                         );
                       } else {
                         return DocumentCard(

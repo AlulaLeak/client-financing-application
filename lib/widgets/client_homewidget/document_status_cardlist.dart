@@ -5,6 +5,7 @@ import '../../constants/constants_documents.dart';
 import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../widgets/client_homewidget/name_card.dart';
 
 class DocumentStatusCard extends StatelessWidget {
   const DocumentStatusCard({
@@ -15,7 +16,7 @@ class DocumentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(16),
-        height: 600.0,
+        height: 1000.0,
         color: primary,
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
@@ -38,6 +39,11 @@ class DocumentStatusCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               backgroundColor: primary),
                         );
+                      } else if (documents[index] == 'application_name') {
+                        return NameCard(
+                            index: index,
+                            document: documents[index],
+                            user: snapshot.data);
                       } else {
                         return DocumentCard(
                             index: index,

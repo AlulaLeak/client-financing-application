@@ -45,6 +45,7 @@ class ClientApp extends StatelessWidget {
             "doc_3": null,
             "doc_4": null,
             "doc_5": null,
+            "application_name": null,
             "created_at": DateTime.now(),
           };
           db
@@ -63,7 +64,7 @@ class ClientApp extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return Scaffold(
                 appBar: AppBar(
-                  title: const Text("Aman's Truck Financing App"),
+                  title: const Text("Financing Application"),
                   actions: [
                     IconButton(
                         onPressed: () {},
@@ -80,7 +81,6 @@ class ClientApp extends StatelessWidget {
                 bottomNavigationBar: const BottomNavBar());
           },
         );
-        // ADD BAR AS A FUTURE BUILDER!
       },
     );
   }

@@ -28,11 +28,13 @@ class Auth extends StatelessWidget {
                   context
                       .read<UserInformation>()
                       .updateUserInfo(snapshot.data!);
+
                   return const AdminHomePage(); // Admin
                 } else {
                   context
                       .read<UserInformation>()
                       .updateUserInfo(snapshot.data!);
+
                   return ClientApp();
                 }
               },

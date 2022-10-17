@@ -15,7 +15,7 @@ class DocumentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(16),
-        height: 350.0,
+        height: 600.0,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -36,6 +36,7 @@ class DocumentStatusCard extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: documents.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -61,7 +62,3 @@ class DocumentStatusCard extends StatelessWidget {
             }));
   }
 }
-
-
-
-// user!.docs[0].get(widget.document)

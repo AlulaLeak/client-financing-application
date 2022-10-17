@@ -6,13 +6,15 @@ import '../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 
-void uploadConfirmation(
+Future<void> uploadConfirmation(
   BuildContext context,
   String fileName,
   String? fileType,
   Uint8List bytes,
   String filePath,
 ) async {
+  print('fileName: -------------------- $fileName');
+  print('filePath: -------------------- $filePath');
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget cancelButton = TextButton(

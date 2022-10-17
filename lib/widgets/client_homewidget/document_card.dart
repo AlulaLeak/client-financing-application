@@ -4,34 +4,6 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:file_picker/file_picker.dart';
 import '../upload_confirmation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:typed_data';
-
-// TODO: MAKE AVAILABLE ON ANDROID AND WEB
-
-class MyCustomClass {
-  const MyCustomClass();
-
-  Future<void> myAsyncMethod(
-      BuildContext context, setFile, VoidCallback onSuccess) async {
-    var picked = await FilePicker.platform.pickFiles(type: FileType.any);
-    if (picked != null) {
-      if (kIsWeb) {
-        await setFile(
-          picked.files.single.name,
-          '',
-          picked.files.single.bytes,
-        );
-      } else {
-        await setFile(
-          picked.files.single.name,
-          picked.files.single.path,
-          Uint8List(0),
-        );
-      }
-      onSuccess.call();
-    }
-  }
-}
 
 class DocumentCard extends StatefulWidget {
   const DocumentCard({Key? key, this.index = 0, this.document, this.user})
@@ -52,14 +24,34 @@ class _DocumentCardState extends State<DocumentCard> {
 
   Future<void> _setFile(
     String fileName,
-    String filePath,
-    Uint8List bytes,
+    String? filePath,
+    Uint8List? bytes,
   ) async {
     setState(() {
       _fileName = fileName;
-      _filePath = filePath;
-      _bytes = bytes;
+      _filePath = filePath ?? '';
+      _bytes = bytes ?? Uint8List(0);
     });
+  }
+
+  Future myAsyncMethod(setFile, VoidCallback onSuccess) async {
+    final picked = await FilePicker.platform
+        .pickFiles(type: FileType.any, withReadStream: true);
+    if (picked != null) {
+      if (kIsWeb) {
+        await _setFile(
+          picked.files.single.name,
+          '',
+          picked.files.single.bytes,
+        ).then((value) => onSuccess.call());
+      } else {
+        await _setFile(
+          picked.files.single.name,
+          picked.files.single.path,
+          Uint8List(0),
+        ).then((value) => onSuccess.call());
+      }
+    }
   }
 
   @override
@@ -115,16 +107,17 @@ class _DocumentCardState extends State<DocumentCard> {
           Column(children: [
             widget.user!.docs[0].get(widget.document.toString()) == null
                 ? TextButton(
-                    onPressed: () => const MyCustomClass()
-                        .myAsyncMethod(context, _setFile, () {
-                      if (kIsWeb) {
-                        uploadConfirmation(context, _fileName, widget.document,
-                            _bytes, _filePath);
-                      } else {
-                        uploadConfirmation(context, _fileName, widget.document,
-                            _bytes, _filePath);
-                      }
-                    }),
+                    onPressed: () async {
+                      myAsyncMethod(_setFile, () async {
+                        if (kIsWeb) {
+                          await uploadConfirmation(context, _fileName,
+                              widget.document, _bytes, _filePath);
+                        } else {
+                          await uploadConfirmation(context, _fileName,
+                              widget.document, _bytes, _filePath);
+                        }
+                      });
+                    },
                     child: const Text(
                       'Upload +',
                       style: TextStyle(

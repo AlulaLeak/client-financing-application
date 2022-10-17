@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../../providers/userinfo_provider.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,6 @@ class WelcomeAndProgressCircle extends StatelessWidget {
       }
     }
     double finalNum = num / (documents.length - 1);
-    // print('finalNum: --------------- ${finalNum}');
     return finalNum;
   }
 

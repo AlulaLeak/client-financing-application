@@ -20,6 +20,7 @@ class _NameCardState extends State<NameCard> {
   TextEditingController nameController = TextEditingController();
   String name = '';
   final db = FirebaseFirestore.instance;
+  bool _validate = false;
 
   Future<void> updateApplicationName() async {
     await db
@@ -69,10 +70,13 @@ class _NameCardState extends State<NameCard> {
                               color: black,
                               fontSize: 14,
                               fontWeight: FontWeight.w500),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Please enter your name here',
-                            hintStyle: TextStyle(color: Colors.grey),
+                            hintText: _validate
+                                ? 'Please enter your name here. Value Can\'t Be Empty'
+                                : 'Please enter your name here',
+                            hintStyle: TextStyle(
+                                color: _validate ? Colors.red : Colors.grey),
                           ),
                         )
                       : Text(
@@ -89,7 +93,15 @@ class _NameCardState extends State<NameCard> {
             widget.user!.docs[0].get(widget.document.toString()) == null
                 ? TextButton(
                     onPressed: () async {
-                      await updateApplicationName();
+                      setState(() {
+                        nameController.text == ""
+                            ? _validate = true
+                            : _validate = false;
+                      });
+                      if (nameController.text != "") {
+                        await updateApplicationName();
+                      }
+                      // await updateApplicationName();
                     },
                     child: const Text(
                       'Sumbit +',

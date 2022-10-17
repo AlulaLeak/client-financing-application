@@ -86,7 +86,7 @@ class WelcomeAndProgressCircle extends StatelessWidget {
                           width: 11,
                         ),
                         Text(
-                          "${_completedDocuments(snapshot) * 100} %",
+                          "${(_completedDocuments(snapshot) * 100).toInt()} %",
                           style: const TextStyle(
                             color: white,
                             fontSize: 20,

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../widgets/client_homewidget/name_card.dart';
+import '../../widgets/client_homewidget/pronouns_card.dart';
 
 class DocumentStatusCard extends StatelessWidget {
   const DocumentStatusCard({
@@ -41,6 +42,11 @@ class DocumentStatusCard extends StatelessWidget {
                         );
                       } else if (documents[index] == 'application_name') {
                         return NameCard(
+                            index: index,
+                            document: documents[index],
+                            user: snapshot.data);
+                      } else if (documents[index] == 'pronouns') {
+                        return PronounsCard(
                             index: index,
                             document: documents[index],
                             user: snapshot.data);

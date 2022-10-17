@@ -6,6 +6,6 @@ List<String> documents = [
   "doc_4",
   "doc_5",
   "application_name",
-  // "pronouns",
+  "pronouns",
   // "date_of_birth",
 ];

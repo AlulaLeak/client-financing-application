@@ -13,8 +13,6 @@ Future<void> uploadConfirmation(
   Uint8List bytes,
   String filePath,
 ) async {
-  print('fileName: -------------------- $fileName');
-  print('filePath: -------------------- $filePath');
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget cancelButton = TextButton(
@@ -47,7 +45,6 @@ Future<void> uploadConfirmation(
       Navigator.pop(context);
     },
   );
-  // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: const Text("Notice"),
     content: const Text(
@@ -57,7 +54,6 @@ Future<void> uploadConfirmation(
       uploadButton,
     ],
   );
-  // show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {

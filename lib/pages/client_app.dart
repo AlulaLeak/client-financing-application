@@ -43,10 +43,9 @@ class ClientApp extends StatelessWidget {
             "doc_1": null,
             "doc_2": null,
             "doc_3": null,
-            "doc_4": null,
-            "doc_5": null,
             "application_name": null,
             "pronouns": null,
+            "date_of_birth": null,
             "created_at": DateTime.now(),
           };
           db

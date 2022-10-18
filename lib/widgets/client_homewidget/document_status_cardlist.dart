@@ -7,11 +7,10 @@ import '../../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../widgets/client_homewidget/name_card.dart';
 import '../../widgets/client_homewidget/pronouns_card.dart';
+import '../../widgets/client_homewidget/dob_card.dart';
 
 class DocumentStatusCard extends StatelessWidget {
-  const DocumentStatusCard({
-    super.key,
-  });
+  const DocumentStatusCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +39,11 @@ class DocumentStatusCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               backgroundColor: primary),
                         );
+                      } else if (documents[index] == 'date_of_birth') {
+                        return DateOfBirthCard(
+                            index: index,
+                            document: documents[index],
+                            user: snapshot.data);
                       } else if (documents[index] == 'application_name') {
                         return NameCard(
                             index: index,

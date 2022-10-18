@@ -45,6 +45,8 @@ dependencies:
   cloud_firestore: ^3.5.1
   firebase_storage: ^10.3.11
   file_picker: ^4.0.0
+  scroll_date_picker: ^3.6.0
+  flutter_holo_date_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:

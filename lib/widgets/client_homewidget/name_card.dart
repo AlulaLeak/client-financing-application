@@ -101,7 +101,6 @@ class _NameCardState extends State<NameCard> {
                       if (nameController.text != "") {
                         await updateApplicationName();
                       }
-                      // await updateApplicationName();
                     },
                     child: const Text(
                       'Sumbit +',

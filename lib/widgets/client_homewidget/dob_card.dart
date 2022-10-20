@@ -95,99 +95,108 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 20, right: 6, top: 20),
-      width: double.infinity,
-      height: 90,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [
-              const Color.fromARGB(255, 255, 255, 255),
-              widget.user!.docs[0].get(widget.document.toString()) == null
-                  ? white
-                  : const Color.fromARGB(255, 162, 255, 167)
-            ],
-            begin: Alignment.centerRight,
-            end: const Alignment(0.005, 0.0),
-            tileMode: TileMode.clamp),
-        borderRadius: const BorderRadius.all(Radius.circular(1.0)),
-      ),
-      child: Row(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Document ${widget.document}",
-                  style: const TextStyle(
-                      color: black, fontSize: 14, fontWeight: FontWeight.w500)),
-              const SizedBox(height: 3),
-              SizedBox(
-                  width: 200,
-                  child: widget.user!.docs[0].get(widget.document.toString()) ==
-                          null
-                      ? Center(
-                          child: OutlinedButton(
-                            onPressed: () {
-                              _restorableDatePickerRouteFuture.present();
-                            },
-                            child: const Text('Open Date Picker'),
+    String? docInfo = widget.user!.docs[0].get(widget.document.toString());
+
+    return Row(
+      children: [
+        Column(
+          children: [
+            SizedBox(
+              height: collapsedIfCompleted(docInfo),
+              child: const VerticalDivider(
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+            ),
+            docInfo != null
+                ? const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                    size: 35,
+                  )
+                : Icon(
+                    Icons.circle_outlined,
+                    color: Colors.grey.shade200,
+                    size: 35,
+                  ),
+            SizedBox(
+              height: collapsedIfCompleted(docInfo),
+              child: const VerticalDivider(
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(left: 10, top: 20),
+            margin: const EdgeInsets.only(left: 10),
+            width: double.infinity,
+            height: 90,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    const Color.fromARGB(255, 255, 255, 255),
+                    docInfo == null
+                        ? white
+                        : const Color.fromARGB(255, 162, 255, 167)
+                  ],
+                  begin: Alignment.centerRight,
+                  end: const Alignment(0.005, 0.0),
+                  tileMode: TileMode.clamp),
+              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
+            ),
+            child: Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Document ${widget.document}",
+                        style: const TextStyle(
+                            color: black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500)),
+                    const SizedBox(height: 3),
+                    Text(docInfo.toString(),
+                        style: const TextStyle(
+                            color: black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500)),
+                  ],
+                ),
+                const Spacer(),
+                Column(children: [
+                  docInfo == null
+                      ? OutlinedButton(
+                          onPressed: () {
+                            _restorableDatePickerRouteFuture.present();
+                          },
+                          child: const Text(
+                            'Pick Date +',
+                            style: TextStyle(
+                              color: primary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
-                      : Text(
-                          widget.user!.docs[0].get(widget.document.toString()),
-                          style: const TextStyle(
-                              color: black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                        ))
-            ],
+                      : TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Complete!',
+                            style: TextStyle(
+                              color: green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                ])
+              ],
+            ),
           ),
-          const Spacer(),
-          Column(children: [
-            widget.user!.docs[0].get(widget.document.toString()) == null
-                ? OutlinedButton(
-                    onPressed: () {
-                      _restorableDatePickerRouteFuture.present();
-                    },
-                    child: const Text(
-                      'Pick Date +',
-                      style: TextStyle(
-                        color: primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Complete!',
-                      style: TextStyle(
-                        color: green,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-          ])
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
-
-
-// TextButton(
-//                     onPressed: () async {
-//                       await updateDateOfBirth();
-//                     },
-//                     child: const Text(
-//                       'Sumbit +',
-//                       style: TextStyle(
-//                         color: primary,
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   )

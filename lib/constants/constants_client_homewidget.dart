@@ -27,3 +27,11 @@ List<String> images = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTIZccfNPnqalhrWev-Xo7uBhkor57_rKbkw&usqp=CAU",
   "https://wallpaperaccess.com/full/2637581.jpg"
 ];
+
+double collapsedIfCompleted(foo) {
+  if (foo == null) {
+    return 80;
+  } else {
+    return 40;
+  }
+}

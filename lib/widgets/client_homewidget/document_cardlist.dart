@@ -16,7 +16,7 @@ class DocumentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(16),
-        height: 1000.0,
+        height: 1250.0,
         color: primary,
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
@@ -27,7 +27,10 @@ class DocumentStatusCard extends StatelessWidget {
               if (snapshot.hasData) {
                 return ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => const Divider(),
+                    separatorBuilder: (context, index) => const VerticalDivider(
+                          thickness: 1,
+                          color: Color(0xFFF6F4F4),
+                        ),
                     itemCount: documents.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (index == 0) {

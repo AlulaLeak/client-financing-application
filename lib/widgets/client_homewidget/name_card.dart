@@ -127,7 +127,7 @@ class _NameCardState extends State<NameCard> {
                                       obscureText: false,
                                       textAlign: TextAlign.left,
                                       style: const TextStyle(
-                                          color: black,
+                                          color: white,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500),
                                       decoration: InputDecoration(

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import '../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../providers/step_provider.dart';
 import 'dart:io';
 
 Future<void> uploadConfirmation(
@@ -24,6 +25,7 @@ Future<void> uploadConfirmation(
   Widget uploadButton = TextButton(
     child: const Text("Upload file"),
     onPressed: () async {
+      Provider.of<StepNumber>(context, listen: false).nextStep();
       FirebaseFirestore.instance
           .collection('users')
           .doc(context.read<UserInformation>().uid)

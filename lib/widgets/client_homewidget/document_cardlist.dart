@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../widgets/client_homewidget/name_card.dart';
 import '../../widgets/client_homewidget/pronouns_card.dart';
 import '../../widgets/client_homewidget/dob_card.dart';
+import '../../widgets/client_homewidget/confirm_card.dart';
 
 class DocumentStatusCard extends StatelessWidget {
   const DocumentStatusCard({super.key});
@@ -16,7 +17,7 @@ class DocumentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(16),
-        height: 1250.0,
+        height: 1500.0,
         color: primary,
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
@@ -54,6 +55,11 @@ class DocumentStatusCard extends StatelessWidget {
                             user: snapshot.data);
                       } else if (documents[index] == 'pronouns') {
                         return PronounsCard(
+                            index: index,
+                            document: documents[index],
+                            user: snapshot.data);
+                      } else if (documents[index] == 'confirmed') {
+                        return ConfirmCard(
                             index: index,
                             document: documents[index],
                             user: snapshot.data);

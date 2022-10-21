@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:workingauth/pages/auth_page.dart';
 import 'package:workingauth/pages/profile_screen.dart';
+import 'package:workingauth/providers/step_provider.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
 import './providers/bottomnav_provider.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => BottomNavSelect()),
     ChangeNotifierProvider(create: (_) => UserInformation()),
     ChangeNotifierProvider(create: (_) => FileToUpload()),
+    ChangeNotifierProvider(create: (_) => StepNumber()),
   ], child: const MyApp()));
 }
 

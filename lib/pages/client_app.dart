@@ -12,7 +12,7 @@ class ClientApp extends StatelessWidget {
   ClientApp({super.key});
 
   final List<Widget> _widgetOptions = <Widget>[
-    ClientHomeWidget(),
+    const ClientHomeWidget(),
     const Center(
       child: Text('Client App Page 2'),
     ),
@@ -46,6 +46,7 @@ class ClientApp extends StatelessWidget {
             "application_name": null,
             "pronouns": null,
             "date_of_birth": null,
+            "confirmed": false,
             "created_at": DateTime.now(),
           };
           db

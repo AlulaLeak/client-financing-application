@@ -3,7 +3,7 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
-import 'package:scroll_date_picker/scroll_date_picker.dart';
+import '../../providers/step_provider.dart';
 
 class DateOfBirthCard extends StatefulWidget {
   const DateOfBirthCard(
@@ -76,6 +76,7 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
 
   Future<void> _selectDate(DateTime? newSelectedDate) async {
     if (newSelectedDate != null) {
+      Provider.of<StepNumber>(context, listen: false).nextStep();
       setState(() {
         _selectedDate.value = newSelectedDate;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -133,16 +134,26 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
             width: double.infinity,
             height: 90,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    const Color.fromARGB(255, 255, 255, 255),
-                    docInfo == null
-                        ? white
-                        : const Color.fromARGB(255, 162, 255, 167)
-                  ],
-                  begin: Alignment.centerRight,
-                  end: const Alignment(0.005, 0.0),
-                  tileMode: TileMode.clamp),
+              gradient: context.watch<StepNumber>().step != widget.index &&
+                      docInfo == null
+                  ? const LinearGradient(
+                      colors: [
+                          Color.fromARGB(255, 114, 114, 114),
+                          Color.fromARGB(255, 114, 114, 114),
+                        ],
+                      begin: Alignment.centerRight,
+                      end: Alignment(0.005, 0.0),
+                      tileMode: TileMode.clamp)
+                  : LinearGradient(
+                      colors: [
+                          const Color.fromARGB(255, 255, 255, 255),
+                          docInfo == null
+                              ? white
+                              : const Color.fromARGB(255, 162, 255, 167)
+                        ],
+                      begin: Alignment.centerRight,
+                      end: const Alignment(0.005, 0.0),
+                      tileMode: TileMode.clamp),
               borderRadius: const BorderRadius.all(Radius.circular(1.0)),
             ),
             child: Row(

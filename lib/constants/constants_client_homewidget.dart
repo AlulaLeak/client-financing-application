@@ -29,7 +29,7 @@ List<String> images = [
 ];
 
 double collapsedIfCompleted(foo) {
-  if (foo == null) {
+  if (foo == null || foo == false) {
     return 80;
   } else {
     return 40;

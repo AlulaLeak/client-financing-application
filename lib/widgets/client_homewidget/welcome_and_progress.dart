@@ -18,7 +18,7 @@ class WelcomeAndProgressCircle extends StatelessWidget {
       idx = documents.indexOf(document);
       if (idx > 0) {
         var valid = snapshot.data!.docs[0].get(document);
-        if (valid != null) {
+        if (valid != null && valid != false) {
           num++;
         }
       }

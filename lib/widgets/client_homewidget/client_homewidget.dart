@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './picture_slider.dart';
 import './welcome_and_progress.dart';
 import 'document_cardlist.dart';
 import './trustedby_card.dart';
@@ -23,13 +22,11 @@ class ClientHomeWidget extends StatelessWidget {
                   children: [
                     WelcomeAndProgressCircle(),
                     const SizedBox(height: 20.0),
-                    // const PictureSlider(),
-                    // const SizedBox(height: 20.0),
                     const DocumentStatusCard(),
-                    const SizedBox(height: 20.0),
-                    const TrustedByCard(),
-                    const SizedBox(height: 20.0),
-                    const ExtraInfoCard(),
+                    // const SizedBox(height: 20.0),
+                    // const TrustedByCard(),
+                    // const SizedBox(height: 20.0),
+                    // const ExtraInfoCard(),
                   ],
                 ),
               ),

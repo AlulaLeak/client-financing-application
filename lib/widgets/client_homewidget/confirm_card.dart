@@ -3,7 +3,6 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
-import '../../providers/step_provider.dart';
 
 class ConfirmCard extends StatefulWidget {
   const ConfirmCard({Key? key, this.index = 0, this.document, this.user})
@@ -19,21 +18,23 @@ class ConfirmCard extends StatefulWidget {
 
 class _ConfirmCardState extends State<ConfirmCard> {
   TextEditingController nameController = TextEditingController();
-  String name = '';
   final db = FirebaseFirestore.instance;
-  bool _validate = false;
 
   Future<void> updateConfirmation() async {
-    Provider.of<StepNumber>(context, listen: false).nextStep();
     await db
         .collection("users")
         .doc(Provider.of<UserInformation>(context, listen: false).uid)
-        .update({'confirmed': true});
+        .update({
+      'confirmed': true,
+      'step': FieldValue.increment(1),
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     bool docInfo = widget.user!.docs[0].get(widget.document.toString());
+    int step = widget.user!.docs[0].get('step');
+
     return Row(
       children: [
         Column(
@@ -50,11 +51,17 @@ class _ConfirmCardState extends State<ConfirmCard> {
                     color: Colors.green,
                     size: 35,
                   )
-                : Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey.shade200,
-                    size: 35,
-                  ),
+                : step == widget.index
+                    ? Icon(
+                        Icons.add_circle,
+                        color: Colors.grey.shade200,
+                        size: 35,
+                      )
+                    : const Icon(
+                        Icons.circle_outlined,
+                        color: Color.fromARGB(255, 114, 114, 114),
+                        size: 35,
+                      ),
             SizedBox(
               height: collapsedIfCompleted(docInfo),
               child: const VerticalDivider(
@@ -65,13 +72,13 @@ class _ConfirmCardState extends State<ConfirmCard> {
         ),
         Flexible(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, top: 20),
+            padding:
+                const EdgeInsets.only(left: 2, right: 16, top: 16, bottom: 16),
             margin: const EdgeInsets.only(left: 10),
             width: double.infinity,
             height: 90,
             decoration: BoxDecoration(
-              gradient: context.watch<StepNumber>().step != widget.index &&
-                      docInfo == false
+              gradient: step != widget.index && docInfo == false
                   ? const LinearGradient(
                       colors: [
                           Color.fromARGB(255, 114, 114, 114),

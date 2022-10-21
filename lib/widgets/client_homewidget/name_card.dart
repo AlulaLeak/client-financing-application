@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../constants/constants_client_homewidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import '../../constants/constants_client_homewidget.dart';
 import '../../providers/userinfo_provider.dart';
-import '../../providers/step_provider.dart';
 
 class NameCard extends StatefulWidget {
   const NameCard({Key? key, this.index = 0, this.document, this.user})
@@ -24,16 +23,20 @@ class _NameCardState extends State<NameCard> {
   bool _validate = false;
 
   Future<void> updateApplicationName() async {
-    Provider.of<StepNumber>(context, listen: false).nextStep();
     await db
         .collection("users")
         .doc(Provider.of<UserInformation>(context, listen: false).uid)
-        .update({'application_name': nameController.text});
+        .update({
+      'application_name': nameController.text,
+      'step': FieldValue.increment(1),
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     String? docInfo = widget.user!.docs[0].get(widget.document.toString());
+    int step = widget.user!.docs[0].get('step');
+
     return Row(
       children: [
         Column(
@@ -50,11 +53,17 @@ class _NameCardState extends State<NameCard> {
                     color: Colors.green,
                     size: 35,
                   )
-                : Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey.shade200,
-                    size: 35,
-                  ),
+                : step == widget.index
+                    ? Icon(
+                        Icons.add_circle,
+                        color: Colors.grey.shade200,
+                        size: 35,
+                      )
+                    : const Icon(
+                        Icons.circle_outlined,
+                        color: Color.fromARGB(255, 114, 114, 114),
+                        size: 35,
+                      ),
             SizedBox(
               height: collapsedIfCompleted(docInfo),
               child: const VerticalDivider(
@@ -70,8 +79,7 @@ class _NameCardState extends State<NameCard> {
             width: double.infinity,
             height: 90,
             decoration: BoxDecoration(
-              gradient: context.watch<StepNumber>().step != widget.index &&
-                      docInfo == null
+              gradient: step != widget.index && docInfo == null
                   ? const LinearGradient(
                       colors: [
                           Color.fromARGB(255, 114, 114, 114),

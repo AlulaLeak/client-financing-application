@@ -18,12 +18,12 @@ class WelcomeAndProgressCircle extends StatelessWidget {
       idx = documents.indexOf(document);
       if (idx > 0) {
         var valid = snapshot.data!.docs[0].get(document);
-        if (valid != null && valid != false) {
+        if (valid != null && valid != false && valid.runtimeType != int) {
           num++;
         }
       }
     }
-    double finalNum = num / (documents.length - 1);
+    double finalNum = num / (documents.length - 2);
     return finalNum;
   }
 

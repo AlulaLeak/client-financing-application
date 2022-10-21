@@ -3,7 +3,6 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
-import '../../providers/step_provider.dart';
 
 class DateOfBirthCard extends StatefulWidget {
   const DateOfBirthCard(
@@ -24,14 +23,6 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
   TextEditingController nameController = TextEditingController();
   String name = '';
   final db = FirebaseFirestore.instance;
-  // DateTime _selectedDate = DateTime.now();
-
-  Future<void> updateDateOfBirth() async {
-    await db
-        .collection("users")
-        .doc(Provider.of<UserInformation>(context, listen: false).uid)
-        .update({'date_of_birth': _selectedDate.toString()});
-  }
 
   @override
   String? get restorationId => widget.restorationId;
@@ -76,7 +67,6 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
 
   Future<void> _selectDate(DateTime? newSelectedDate) async {
     if (newSelectedDate != null) {
-      Provider.of<StepNumber>(context, listen: false).nextStep();
       setState(() {
         _selectedDate.value = newSelectedDate;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -89,7 +79,8 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
           .doc(Provider.of<UserInformation>(context, listen: false).uid)
           .update({
         'date_of_birth':
-            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'
+            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
+        'step': FieldValue.increment(1),
       });
     }
   }
@@ -97,6 +88,7 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
   @override
   Widget build(BuildContext context) {
     String? docInfo = widget.user!.docs[0].get(widget.document.toString());
+    int step = widget.user!.docs[0].get('step');
 
     return Row(
       children: [
@@ -114,11 +106,17 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
                     color: Colors.green,
                     size: 35,
                   )
-                : Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey.shade200,
-                    size: 35,
-                  ),
+                : step == widget.index
+                    ? Icon(
+                        Icons.add_circle,
+                        color: Colors.grey.shade200,
+                        size: 35,
+                      )
+                    : const Icon(
+                        Icons.circle_outlined,
+                        color: Color.fromARGB(255, 114, 114, 114),
+                        size: 35,
+                      ),
             SizedBox(
               height: collapsedIfCompleted(docInfo),
               child: const VerticalDivider(
@@ -134,8 +132,7 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
             width: double.infinity,
             height: 90,
             decoration: BoxDecoration(
-              gradient: context.watch<StepNumber>().step != widget.index &&
-                      docInfo == null
+              gradient: step != widget.index && docInfo == null
                   ? const LinearGradient(
                       colors: [
                           Color.fromARGB(255, 114, 114, 114),

@@ -47,6 +47,7 @@ class ClientApp extends StatelessWidget {
             "pronouns": null,
             "date_of_birth": null,
             "confirmed": false,
+            "step": 1,
             "created_at": DateTime.now(),
           };
           db

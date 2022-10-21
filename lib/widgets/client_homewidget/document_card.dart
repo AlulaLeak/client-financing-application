@@ -4,9 +4,6 @@ import '../../constants/constants_client_homewidget.dart';
 import 'package:file_picker/file_picker.dart';
 import '../upload_confirmation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
-
-import '../../providers/step_provider.dart';
 
 class DocumentCard extends StatefulWidget {
   const DocumentCard({Key? key, this.index = 0, this.document, this.user})
@@ -60,6 +57,8 @@ class _DocumentCardState extends State<DocumentCard> {
   @override
   Widget build(BuildContext context) {
     String? docInfo = widget.user!.docs[0].get(widget.document.toString());
+    int step = widget.user!.docs[0].get('step');
+
     return Row(
       children: [
         Column(
@@ -70,17 +69,23 @@ class _DocumentCardState extends State<DocumentCard> {
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
-            widget.user!.docs[0].get(widget.document.toString()) != null
+            docInfo != null
                 ? const Icon(
                     Icons.check,
                     color: Colors.green,
                     size: 35,
                   )
-                : Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey.shade200,
-                    size: 35,
-                  ),
+                : step == widget.index
+                    ? Icon(
+                        Icons.add_circle,
+                        color: Colors.grey.shade200,
+                        size: 35,
+                      )
+                    : const Icon(
+                        Icons.circle_outlined,
+                        color: Color.fromARGB(255, 114, 114, 114),
+                        size: 35,
+                      ),
             SizedBox(
               height: collapsedIfCompleted(docInfo),
               child: const VerticalDivider(
@@ -96,8 +101,7 @@ class _DocumentCardState extends State<DocumentCard> {
             width: double.infinity,
             height: 90,
             decoration: BoxDecoration(
-              gradient: context.watch<StepNumber>().step != widget.index &&
-                      docInfo == null
+              gradient: step != widget.index && docInfo == null
                   ? const LinearGradient(
                       colors: [
                           Color.fromARGB(255, 114, 114, 114),

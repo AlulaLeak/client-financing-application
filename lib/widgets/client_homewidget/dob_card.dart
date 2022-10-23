@@ -130,76 +130,83 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
             padding: const EdgeInsets.only(left: 10, top: 20),
             margin: const EdgeInsets.only(left: 10),
             width: double.infinity,
-            height: 90,
-            decoration: BoxDecoration(
-              gradient: step != widget.index && docInfo == null
-                  ? const LinearGradient(
-                      colors: [
-                          Color.fromARGB(255, 114, 114, 114),
-                          Color.fromARGB(255, 114, 114, 114),
-                        ],
-                      begin: Alignment.centerRight,
-                      end: Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp)
-                  : LinearGradient(
-                      colors: [
-                          const Color.fromARGB(255, 255, 255, 255),
-                          docInfo == null
-                              ? white
-                              : const Color.fromARGB(255, 162, 255, 167)
-                        ],
-                      begin: Alignment.centerRight,
-                      end: const Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp),
-              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
+            height: 150,
+            decoration: const BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.all(Radius.circular(1.0)),
             ),
-            child: Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Document ${widget.document}",
-                        style: const TextStyle(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
-                    const SizedBox(height: 3),
-                    Text(docInfo.toString(),
-                        style: const TextStyle(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
-                  ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: docInfo == null
+                      ? [
+                          Text("Please select your date of birth:",
+                              style: TextStyle(
+                                  color: step == widget.index ? white : grey,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                        ]
+                      : [
+                          const Text("Your Date of birth is:",
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                          const SizedBox(height: 10),
+                          Text(docInfo.toString(),
+                              style: const TextStyle(
+                                  color: white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                        ],
                 ),
                 const Spacer(),
-                Column(children: [
-                  docInfo == null
-                      ? OutlinedButton(
-                          onPressed: () {
-                            _restorableDatePickerRouteFuture.present();
-                          },
-                          child: const Text(
-                            'Pick Date +',
-                            style: TextStyle(
-                              color: primary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    docInfo == null
+                        ? OutlinedButton(
+                            onPressed: () {
+                              _restorableDatePickerRouteFuture.present();
+                            },
+                            child: Text(
+                              'Pick Date +',
+                              style: TextStyle(
+                                color: step == widget.index ? white : grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: Center(
+                              child: Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  const Text(
+                                    'Complete!',
+                                    style: TextStyle(
+                                      color: green,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 45),
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: const Text('[Edit]'),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        )
-                      : TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Complete!',
-                            style: TextStyle(
-                              color: green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                ])
+                  ],
+                )
               ],
             ),
           ),

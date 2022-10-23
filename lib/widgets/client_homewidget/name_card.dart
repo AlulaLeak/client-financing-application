@@ -36,8 +36,6 @@ class _NameCardState extends State<NameCard> {
   Widget build(BuildContext context) {
     String? docInfo = widget.user!.docs[0].get(widget.document.toString());
     int step = widget.user!.docs[0].get('step');
-    final ButtonStyle submitButtonStyle =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
     return Row(
       children: [
@@ -100,7 +98,7 @@ class _NameCardState extends State<NameCard> {
                                   fontWeight: FontWeight.w500),
                             )
                           : const Text(
-                              "Your name is:",
+                              "Your full name is:",
                               style: TextStyle(
                                   color: white,
                                   fontSize: 20,
@@ -162,14 +160,28 @@ class _NameCardState extends State<NameCard> {
                                   },
                                   child: const Text('Submit'),
                                 )
-                              : TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Complete!',
-                                    style: TextStyle(
-                                      color: green,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                              : Expanded(
+                                  child: Center(
+                                    child: Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        const Text(
+                                          'Complete!',
+                                          style: TextStyle(
+                                            color: green,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 45),
+                                          child: TextButton(
+                                            onPressed: () {},
+                                            child: const Text('[Edit]'),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),

@@ -64,9 +64,9 @@ class _PronounsCardState extends State<PronounsCard> {
                         color: Color.fromARGB(255, 114, 114, 114),
                         size: 35,
                       ),
-            SizedBox(
-              height: collapsedIfCompleted(docInfo),
-              child: const VerticalDivider(
+            const SizedBox(
+              height: 80,
+              child: VerticalDivider(
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
@@ -127,6 +127,12 @@ class _PronounsCardState extends State<PronounsCard> {
                                               Row(
                                                 children: [
                                                   Radio<String>(
+                                                    fillColor:
+                                                        MaterialStateColor
+                                                            .resolveWith(
+                                                                (states) =>
+                                                                    Colors
+                                                                        .grey),
                                                     value: "he/him",
                                                     groupValue: _character,
                                                     onChanged: (String? value) {
@@ -175,6 +181,12 @@ class _PronounsCardState extends State<PronounsCard> {
                                               Row(
                                                 children: [
                                                   Radio<String>(
+                                                    fillColor:
+                                                        MaterialStateColor
+                                                            .resolveWith(
+                                                                (states) =>
+                                                                    Colors
+                                                                        .grey),
                                                     value: "they/them",
                                                     groupValue: _character,
                                                     onChanged: (String? value) {
@@ -196,6 +208,12 @@ class _PronounsCardState extends State<PronounsCard> {
                                               Row(
                                                 children: [
                                                   Radio<String>(
+                                                    fillColor:
+                                                        MaterialStateColor
+                                                            .resolveWith(
+                                                                (states) =>
+                                                                    Colors
+                                                                        .grey),
                                                     value:
                                                         "other/prefer not to say",
                                                     groupValue: _character,
@@ -238,14 +256,28 @@ class _PronounsCardState extends State<PronounsCard> {
                                     },
                                     child: const Text('Submit'),
                                   )
-                                : TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Complete!',
-                                      style: TextStyle(
-                                        color: green,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                : Expanded(
+                                    child: Center(
+                                      child: Stack(
+                                        alignment: AlignmentDirectional.center,
+                                        children: [
+                                          const Text(
+                                            'Complete!',
+                                            style: TextStyle(
+                                              color: green,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 45),
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: const Text('[Edit]'),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),

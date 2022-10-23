@@ -32,6 +32,6 @@ double collapsedIfCompleted(foo) {
   if (foo == null || foo == false) {
     return 80;
   } else {
-    return 40;
+    return 60;
   }
 }

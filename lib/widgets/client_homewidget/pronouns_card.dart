@@ -22,7 +22,7 @@ class _PronounsCardState extends State<PronounsCard> {
   String name = '';
   final db = FirebaseFirestore.instance;
 
-  Future<void> updateApplicationName() async {
+  Future<void> updateApplicationPronoun() async {
     await db
         .collection("users")
         .doc(Provider.of<UserInformation>(context, listen: false).uid)
@@ -77,28 +77,10 @@ class _PronounsCardState extends State<PronounsCard> {
             padding: const EdgeInsets.only(left: 10, top: 20),
             margin: const EdgeInsets.only(left: 10),
             width: double.infinity,
-            height: 90,
-            decoration: BoxDecoration(
-              gradient: step != widget.index && docInfo == null
-                  ? const LinearGradient(
-                      colors: [
-                          Color.fromARGB(255, 114, 114, 114),
-                          Color.fromARGB(255, 114, 114, 114),
-                        ],
-                      begin: Alignment.centerRight,
-                      end: Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp)
-                  : LinearGradient(
-                      colors: [
-                          const Color.fromARGB(255, 255, 255, 255),
-                          docInfo == null
-                              ? white
-                              : const Color.fromARGB(255, 162, 255, 167)
-                        ],
-                      begin: Alignment.centerRight,
-                      end: const Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp),
-              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
+            height: 150,
+            decoration: const BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.all(Radius.circular(1.0)),
             ),
             child: Row(
               children: [
@@ -107,131 +89,172 @@ class _PronounsCardState extends State<PronounsCard> {
                       unselectedWidgetColor: const Color.fromARGB(255, 0, 0, 0),
                       disabledColor: Colors.blue),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Document ${widget.document}",
-                          style: const TextStyle(
-                              color: black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500)),
-                      const SizedBox(height: 3),
+                      docInfo == null
+                          ? Text("Please select your pronouns:",
+                              style: TextStyle(
+                                  color: step == widget.index ? white : grey,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500))
+                          : const Text("Your pronouns are:",
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 7),
                       Scrollbar(
                         thumbVisibility: docInfo == null,
-                        child: SizedBox(
-                            width: 200,
-                            child: docInfo == null
-                                ? SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(children: <Widget>[
-                                      Row(
-                                        children: [
-                                          Radio<String>(
-                                            value: "he/him",
-                                            groupValue: _character,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _character = value;
-                                              });
-                                            },
-                                          ),
-                                          const Text(
-                                            "he/him",
-                                            style: TextStyle(color: black),
-                                          ),
-                                        ],
+                        child: Row(
+                          children: [
+                            SizedBox(
+                                width: 200,
+                                child: docInfo == null
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: docInfo == null
+                                                    ? const Color.fromARGB(
+                                                        255, 71, 71, 71)
+                                                    : const Color.fromARGB(
+                                                        255, 114, 114, 114))),
+                                        child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(children: <Widget>[
+                                              Row(
+                                                children: [
+                                                  Radio<String>(
+                                                    value: "he/him",
+                                                    groupValue: _character,
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _character = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "he/him",
+                                                    style: TextStyle(
+                                                        color:
+                                                            step == widget.index
+                                                                ? white
+                                                                : grey),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio<String>(
+                                                    fillColor:
+                                                        MaterialStateColor
+                                                            .resolveWith(
+                                                                (states) =>
+                                                                    Colors
+                                                                        .grey),
+                                                    value: "she/her",
+                                                    groupValue: _character,
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _character = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "she/her",
+                                                    style: TextStyle(
+                                                        color:
+                                                            step == widget.index
+                                                                ? white
+                                                                : grey),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio<String>(
+                                                    value: "they/them",
+                                                    groupValue: _character,
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _character = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "they/them",
+                                                    style: TextStyle(
+                                                        color:
+                                                            step == widget.index
+                                                                ? white
+                                                                : grey),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Radio<String>(
+                                                    value:
+                                                        "other/prefer not to say",
+                                                    groupValue: _character,
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _character = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "other/prefer not to say",
+                                                    style: TextStyle(
+                                                        color:
+                                                            step == widget.index
+                                                                ? white
+                                                                : grey),
+                                                  ),
+                                                ],
+                                              ),
+                                            ])),
+                                      )
+                                    : Text(
+                                        docInfo,
+                                        style: const TextStyle(
+                                            color: white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                            const SizedBox(width: 10),
+                            docInfo == null
+                                ? ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: step == widget.index
+                                          ? Colors.blue
+                                          : const Color.fromARGB(
+                                              255, 94, 120, 139),
+                                    ),
+                                    onPressed: () async {
+                                      await updateApplicationPronoun();
+                                    },
+                                    child: const Text('Submit'),
+                                  )
+                                : TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'Complete!',
+                                      style: TextStyle(
+                                        color: green,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      Row(
-                                        children: [
-                                          Radio<String>(
-                                            value: "she/her",
-                                            groupValue: _character,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _character = value;
-                                              });
-                                            },
-                                          ),
-                                          const Text(
-                                            "she/her",
-                                            style: TextStyle(color: black),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Radio<String>(
-                                            value: "they/them",
-                                            groupValue: _character,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _character = value;
-                                              });
-                                            },
-                                          ),
-                                          const Text(
-                                            "they/them",
-                                            style: TextStyle(color: black),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Radio<String>(
-                                            value: "other/prefer not to say",
-                                            groupValue: _character,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _character = value;
-                                              });
-                                            },
-                                          ),
-                                          const Text(
-                                            "other/prefer not to say",
-                                            style: TextStyle(color: black),
-                                          ),
-                                        ],
-                                      ),
-                                    ]))
-                                : Text(
-                                    docInfo,
-                                    style: const TextStyle(
-                                        color: black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  )),
+                                    ),
+                                  ),
+                          ],
+                        ),
                       )
                     ],
                   ),
                 ),
-                const Spacer(),
-                Column(children: [
-                  docInfo == null
-                      ? TextButton(
-                          onPressed: () async {
-                            await updateApplicationName();
-                          },
-                          child: const Text(
-                            'Sumbit +',
-                            style: TextStyle(
-                              color: primary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      : TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Complete!',
-                            style: TextStyle(
-                              color: green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                ])
               ],
             ),
           ),

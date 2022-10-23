@@ -80,27 +80,9 @@ class _NameCardState extends State<NameCard> {
             margin: const EdgeInsets.only(left: 10),
             width: double.infinity,
             height: 150,
-            decoration: BoxDecoration(
-              gradient: step != widget.index && docInfo == null
-                  ? const LinearGradient(
-                      colors: [
-                          Color.fromARGB(255, 114, 114, 114),
-                          Color.fromARGB(255, 114, 114, 114),
-                        ],
-                      begin: Alignment.centerRight,
-                      end: Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp)
-                  : LinearGradient(
-                      colors: [
-                          primary,
-                          docInfo == null
-                              ? primary
-                              : const Color.fromARGB(255, 162, 255, 167)
-                        ],
-                      begin: Alignment.centerRight,
-                      end: const Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp),
-              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
+            decoration: const BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.all(Radius.circular(1.0)),
             ),
             child: Row(
               children: [
@@ -109,11 +91,21 @@ class _NameCardState extends State<NameCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text("Please enter your name here:",
-                          style: TextStyle(
-                              color: white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500)),
+                      docInfo == null
+                          ? const Text(
+                              "Please enter your name here:",
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          : const Text(
+                              "Your name is:",
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
                       const SizedBox(height: 3),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,8 +143,8 @@ class _NameCardState extends State<NameCard> {
                                   : Text(
                                       docInfo,
                                       style: const TextStyle(
-                                          color: black,
-                                          fontSize: 14,
+                                          color: white,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w500),
                                     )),
                           const SizedBox(width: 15),

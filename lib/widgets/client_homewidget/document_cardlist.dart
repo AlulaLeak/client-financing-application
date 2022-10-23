@@ -29,12 +29,8 @@ class DocumentStatusCard extends StatelessWidget {
                 height: (210 * documents.length).toDouble() -
                     (120 * step).toDouble(),
                 color: primary,
-                child: ListView.separated(
+                child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => const VerticalDivider(
-                          thickness: 1,
-                          color: Color(0xFFF6F4F4),
-                        ),
                     itemCount: documents.length,
                     itemBuilder: (BuildContext context, int index) {
                       bool isFocused =

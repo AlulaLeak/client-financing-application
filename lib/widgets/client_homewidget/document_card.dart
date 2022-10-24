@@ -99,90 +99,112 @@ class _DocumentCardState extends State<DocumentCard> {
             padding: const EdgeInsets.only(left: 10, top: 20),
             margin: const EdgeInsets.only(left: 10),
             width: double.infinity,
-            height: 90,
-            decoration: BoxDecoration(
-              gradient: step != widget.index && docInfo == null
-                  ? const LinearGradient(
-                      colors: [
-                          Color.fromARGB(255, 114, 114, 114),
-                          Color.fromARGB(255, 114, 114, 114),
-                        ],
-                      begin: Alignment.centerRight,
-                      end: Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp)
-                  : LinearGradient(
-                      colors: [
-                          const Color.fromARGB(255, 255, 255, 255),
-                          docInfo == null
-                              ? white
-                              : const Color.fromARGB(255, 162, 255, 167)
-                        ],
-                      begin: Alignment.centerRight,
-                      end: const Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp),
-              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
+            height: 150,
+            decoration: const BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.all(Radius.circular(1.0)),
             ),
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Document ${widget.document}",
-                        style: const TextStyle(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500)),
-                    const SizedBox(height: 3),
-                    const SizedBox(
-                      width: 200,
-                      child: Text(
-                        "Lorem ipsum dolor sit amet consectetur adipisicing",
-                        style: TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
+            child: Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  docInfo == null
+                      ? Text("Please upload your ${widget.document}:",
+                          style: TextStyle(
+                              color: step == widget.index ? white : grey,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500))
+                      : Text('Your ${widget.document}:',
+                          style: const TextStyle(
+                              color: white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500)),
+                  Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: docInfo == null
+                                ? Text(
+                                    "Placeholder for an explanation of the file that needs to be uploaded here",
+                                    style: TextStyle(
+                                        color: step == widget.index
+                                            ? Colors.grey.shade300
+                                            : grey,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : Text(
+                                    docInfo,
+                                    style: const TextStyle(
+                                        color: white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Column(children: [
-                  widget.user!.docs[0].get(widget.document.toString()) == null
-                      ? TextButton(
-                          onPressed: () async {
-                            myAsyncMethod(_setFile, () async {
-                              if (kIsWeb) {
-                                await uploadConfirmation(context, _fileName,
-                                    widget.document, _bytes, _filePath);
-                              } else {
-                                await uploadConfirmation(context, _fileName,
-                                    widget.document, _bytes, _filePath);
-                              }
-                            });
-                          },
-                          child: const Text(
-                            'Upload +',
-                            style: TextStyle(
-                              color: primary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      : TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Complete!',
-                            style: TextStyle(
-                              color: green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                ])
-              ],
+                      const Spacer(),
+                      Column(children: [
+                        widget.user!.docs[0].get(widget.document.toString()) ==
+                                null
+                            ? OutlinedButton(
+                                onPressed: () async {
+                                  myAsyncMethod(_setFile, () async {
+                                    if (kIsWeb) {
+                                      await uploadConfirmation(
+                                          context,
+                                          _fileName,
+                                          widget.document,
+                                          _bytes,
+                                          _filePath);
+                                    } else {
+                                      await uploadConfirmation(
+                                          context,
+                                          _fileName,
+                                          widget.document,
+                                          _bytes,
+                                          _filePath);
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  'Upload',
+                                  style: TextStyle(
+                                    color: step == widget.index ? white : grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  const Text(
+                                    'Complete!',
+                                    style: TextStyle(
+                                      color: green,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 45),
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: const Text('[Edit]'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                      ])
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -180,27 +180,23 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
                                         fontWeight: FontWeight.w500)),
                               ),
                               Stack(
+                                alignment: AlignmentDirectional.center,
                                 children: [
-                                  Stack(
-                                    alignment: AlignmentDirectional.center,
-                                    children: [
-                                      const Text(
-                                        'Complete!',
-                                        style: TextStyle(
-                                          color: green,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(top: 45),
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: const Text('[Edit]'),
-                                        ),
-                                      )
-                                    ],
+                                  const Text(
+                                    'Complete!',
+                                    style: TextStyle(
+                                      color: green,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 45),
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: const Text('[Edit]'),
+                                    ),
+                                  )
                                 ],
                               ),
                             ],

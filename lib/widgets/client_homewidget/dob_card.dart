@@ -193,7 +193,10 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
                                   Container(
                                     margin: const EdgeInsets.only(top: 45),
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        _restorableDatePickerRouteFuture
+                                            .present();
+                                      },
                                       child: const Text('[Edit]'),
                                     ),
                                   )

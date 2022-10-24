@@ -80,7 +80,10 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
           .update({
         'date_of_birth':
             '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
-        'step': FieldValue.increment(1),
+        'step': FieldValue.increment(
+            widget.user!.docs[0].get(widget.document.toString()) == null
+                ? 1
+                : 0),
       });
     }
   }

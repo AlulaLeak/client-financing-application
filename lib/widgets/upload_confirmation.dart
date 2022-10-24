@@ -6,13 +6,8 @@ import '../providers/userinfo_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 
-Future<void> uploadConfirmation(
-  BuildContext context,
-  String fileName,
-  String? fileType,
-  Uint8List bytes,
-  String filePath,
-) async {
+Future<void> uploadConfirmation(BuildContext context, String fileName,
+    String? fileType, Uint8List bytes, String filePath, String? docInfo) async {
   final user =
       Provider.of<UserInformation>(context, listen: false).uid.toString();
   Widget cancelButton = TextButton(
@@ -29,7 +24,7 @@ Future<void> uploadConfirmation(
           .doc(context.read<UserInformation>().uid)
           .update({
         fileType.toString(): fileName.toString(),
-        'step': FieldValue.increment(1)
+        'step': FieldValue.increment(docInfo == null ? 1 : 0)
       });
 
       final storage =
@@ -51,7 +46,7 @@ Future<void> uploadConfirmation(
   AlertDialog alert = AlertDialog(
     title: const Text("Notice"),
     content: const Text(
-        "Launching this missile will destroy the entire universe. Is this what you intended to do?"),
+        "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
     actions: [
       cancelButton,
       uploadButton,

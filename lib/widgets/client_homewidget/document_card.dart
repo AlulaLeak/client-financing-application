@@ -160,14 +160,16 @@ class _DocumentCardState extends State<DocumentCard> {
                                           _fileName,
                                           widget.document,
                                           _bytes,
-                                          _filePath);
+                                          _filePath,
+                                          docInfo);
                                     } else {
                                       await uploadConfirmation(
                                           context,
                                           _fileName,
                                           widget.document,
                                           _bytes,
-                                          _filePath);
+                                          _filePath,
+                                          docInfo);
                                     }
                                   });
                                 },
@@ -194,7 +196,27 @@ class _DocumentCardState extends State<DocumentCard> {
                                   Container(
                                     margin: const EdgeInsets.only(top: 45),
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        myAsyncMethod(_setFile, () async {
+                                          if (kIsWeb) {
+                                            await uploadConfirmation(
+                                                context,
+                                                _fileName,
+                                                widget.document,
+                                                _bytes,
+                                                _filePath,
+                                                docInfo);
+                                          } else {
+                                            await uploadConfirmation(
+                                                context,
+                                                _fileName,
+                                                widget.document,
+                                                _bytes,
+                                                _filePath,
+                                                docInfo);
+                                          }
+                                        });
+                                      },
                                       child: const Text('[Edit]'),
                                     ),
                                   )

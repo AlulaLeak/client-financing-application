@@ -39,9 +39,9 @@ class _ConfirmCardState extends State<ConfirmCard> {
       children: [
         Column(
           children: [
-            SizedBox(
-              height: collapsedIfCompleted(docInfo),
-              child: const VerticalDivider(
+            const SizedBox(
+              height: 100,
+              child: VerticalDivider(
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
@@ -53,7 +53,7 @@ class _ConfirmCardState extends State<ConfirmCard> {
                   )
                 : step == widget.index
                     ? Icon(
-                        Icons.add_circle,
+                        Icons.auto_awesome_outlined,
                         color: Colors.grey.shade200,
                         size: 35,
                       )
@@ -72,91 +72,85 @@ class _ConfirmCardState extends State<ConfirmCard> {
         ),
         Flexible(
           child: Container(
-            padding:
-                const EdgeInsets.only(left: 2, right: 16, top: 16, bottom: 16),
-            margin: const EdgeInsets.only(left: 10),
-            width: double.infinity,
-            height: 90,
-            decoration: BoxDecoration(
-              gradient: step != widget.index && docInfo == false
-                  ? const LinearGradient(
-                      colors: [
-                          Color.fromARGB(255, 114, 114, 114),
-                          Color.fromARGB(255, 114, 114, 114),
-                        ],
-                      begin: Alignment.centerRight,
-                      end: Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp)
-                  : LinearGradient(
-                      colors: [
-                          const Color.fromARGB(255, 255, 255, 255),
-                          docInfo == false
-                              ? white
-                              : const Color.fromARGB(255, 162, 255, 167)
-                        ],
-                      begin: Alignment.centerRight,
-                      end: const Alignment(0.005, 0.0),
-                      tileMode: TileMode.clamp),
-              borderRadius: const BorderRadius.all(Radius.circular(1.0)),
-            ),
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                        "By clicking 'Confirm', you are hereby aknowleging that all the information above is correct, and you are agreeing to sell you soul to the devil (jkjk.. maybe?).",
+              padding: const EdgeInsets.only(left: 10, top: 20),
+              margin: const EdgeInsets.only(left: 10),
+              width: double.infinity,
+              height: 200,
+              decoration: const BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.all(Radius.circular(1.0)),
+              ),
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Please Confirm:",
                         style: TextStyle(
-                            color: black,
-                            fontSize: 14,
+                            color: white,
+                            fontSize: 20,
                             fontWeight: FontWeight.w500)),
-                    SizedBox(height: 3),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      width: 300,
+                      child: Text(
+                          "By clicking 'Confirm', you are hereby acknowleging that all the information above is correct, and your are agreeing to sell you soul to the devil (jkjk.. maybe?).",
+                          style: TextStyle(
+                              color: white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
+                    ),
+                    const SizedBox(height: 10),
+                    docInfo == false
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton.icon(
+                                icon:
+                                    const Icon(Icons.cancel_presentation_sharp),
+                                onPressed: () async {
+                                  await updateConfirmation();
+                                },
+                                label: const Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              TextButton.icon(
+                                icon: const Icon(Icons.check),
+                                onPressed: () async {
+                                  await updateConfirmation();
+                                },
+                                label: const Text(
+                                  'Confirm',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Complete!',
+                              style: TextStyle(
+                                color: green,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                   ],
                 ),
-                const Spacer(),
-                Column(children: [
-                  docInfo == false
-                      ? TextButton(
-                          onPressed: () async {
-                            await updateConfirmation();
-                          },
-                          child: const Text(
-                            'Confirm',
-                            style: TextStyle(
-                              color: primary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      : TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Complete!',
-                            style: TextStyle(
-                              color: green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                ])
-              ],
-            ),
-          ),
+              )),
         ),
       ],
     );
   }
 }
-
-
-
-// TODO: add final card confirming if the person is ready to submit
-// if they submit, then add the data to the database (add "completed" bool to db)
-// and remove all the other cards and replace them with a "thank you for applying" card or something
-
-// TODO: make it so the user cant submit until the last step is completed (grey out later cards and make them unclickable)
-// TDOO: make it so the user can replace the old submitions with new ones (until they press the final submit)
-// TODO: move checkmarks/circles to the right (or do w/e to make it look better)

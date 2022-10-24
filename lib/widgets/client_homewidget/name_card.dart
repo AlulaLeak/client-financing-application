@@ -160,30 +160,25 @@ class _NameCardState extends State<NameCard> {
                                   },
                                   child: const Text('Submit'),
                                 )
-                              : Expanded(
-                                  child: Center(
-                                    child: Stack(
-                                      alignment: AlignmentDirectional.center,
-                                      children: [
-                                        const Text(
-                                          'Complete!',
-                                          style: TextStyle(
-                                            color: green,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 45),
-                                          child: TextButton(
-                                            onPressed: () {},
-                                            child: const Text('[Edit]'),
-                                          ),
-                                        )
-                                      ],
+                              : Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    const Text(
+                                      'Complete!',
+                                      style: TextStyle(
+                                        color: green,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 45),
+                                      child: TextButton(
+                                        onPressed: () {},
+                                        child: const Text('[Edit]'),
+                                      ),
+                                    )
+                                  ],
                                 ),
                         ],
                       )

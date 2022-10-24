@@ -127,48 +127,25 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
         ),
         Flexible(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, top: 20),
-            margin: const EdgeInsets.only(left: 10),
-            width: double.infinity,
-            height: 150,
-            decoration: const BoxDecoration(
-              color: primary,
-              borderRadius: BorderRadius.all(Radius.circular(1.0)),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: docInfo == null
-                      ? [
+              padding: const EdgeInsets.only(left: 10, top: 20),
+              margin: const EdgeInsets.only(left: 10),
+              width: double.infinity,
+              height: 150,
+              decoration: const BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.all(Radius.circular(1.0)),
+              ),
+              child: docInfo == null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                           Text("Please select your date of birth:",
                               style: TextStyle(
                                   color: step == widget.index ? white : grey,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500)),
-                        ]
-                      : [
-                          const Text("Your Date of birth is:",
-                              style: TextStyle(
-                                  color: white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 10),
-                          Text(docInfo.toString(),
-                              style: const TextStyle(
-                                  color: white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500)),
-                        ],
-                ),
-                const Spacer(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    docInfo == null
-                        ? OutlinedButton(
+                          OutlinedButton(
                             onPressed: () {
                               _restorableDatePickerRouteFuture.present();
                             },
@@ -181,35 +158,56 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
                               ),
                             ),
                           )
-                        : Expanded(
-                            child: Center(
-                              child: Stack(
-                                alignment: AlignmentDirectional.center,
+                        ])
+                  : Column(
+                      children: [
+                        const Text("Your Date of birth is:",
+                            style: TextStyle(
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500)),
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                child: Text(docInfo.toString(),
+                                    style: const TextStyle(
+                                        color: white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                              Stack(
                                 children: [
-                                  const Text(
-                                    'Complete!',
-                                    style: TextStyle(
-                                      color: green,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      const Text(
+                                        'Complete!',
+                                        style: TextStyle(
+                                          color: green,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 45),
+                                        child: TextButton(
+                                          onPressed: () {},
+                                          child: const Text('[Edit]'),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 45),
-                                    child: TextButton(
-                                      onPressed: () {},
-                                      child: const Text('[Edit]'),
-                                    ),
-                                  )
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                  ],
-                )
-              ],
-            ),
-          ),
+                        ),
+                      ],
+                    )),
         ),
       ],
     );

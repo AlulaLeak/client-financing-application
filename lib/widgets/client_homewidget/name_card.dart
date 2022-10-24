@@ -32,6 +32,15 @@ class _NameCardState extends State<NameCard> {
     });
   }
 
+  Future<void> editApplicationName(onSuccess) async {
+    await db
+        .collection("users")
+        .doc(Provider.of<UserInformation>(context, listen: false).uid)
+        .update({
+      'application_name': nameController.text,
+    }).then((value) => onSuccess.call());
+  }
+
   @override
   Widget build(BuildContext context) {
     String? docInfo = widget.user!.docs[0].get(widget.document.toString());
@@ -174,7 +183,56 @@ class _NameCardState extends State<NameCard> {
                                     Container(
                                       margin: const EdgeInsets.only(top: 45),
                                       child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () => showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title:
+                                                const Text('Enter a new name:'),
+                                            content: TextField(
+                                              controller: nameController,
+                                              obscureText: false,
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                  color: white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: const BorderSide(
+                                                      color: Color.fromARGB(
+                                                          255, 114, 114, 114),
+                                                      width: 1),
+                                                ),
+                                                hintText: _validate
+                                                    ? 'Value Can\'t Be Empty'
+                                                    : 'Full Name',
+                                                hintStyle: TextStyle(
+                                                    color: _validate
+                                                        ? Colors.red
+                                                        : Colors.grey),
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await editApplicationName(() {
+                                                    Navigator.pop(
+                                                        context, 'OK');
+                                                  });
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         child: const Text('[Edit]'),
                                       ),
                                     )

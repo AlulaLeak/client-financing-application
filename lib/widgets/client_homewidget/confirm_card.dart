@@ -105,7 +105,8 @@ class _ConfirmCardState extends State<ConfirmCard> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    Text("Confirm?",
+                    Text(
+                        "By clicking 'Confirm', you are hereby aknowleging that all the information above is correct, and you are agreeing to sell you soul to the devil (jkjk.. maybe?).",
                         style: TextStyle(
                             color: black,
                             fontSize: 14,

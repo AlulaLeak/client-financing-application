@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workingauth/providers/pronoun_provider.dart';
 import '../../constants/constants_client_homewidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,6 @@ class PronounsCard extends StatefulWidget {
 }
 
 class _PronounsCardState extends State<PronounsCard> {
-  String? _character = "he/him";
-
   String name = '';
   final db = FirebaseFirestore.instance;
 
@@ -27,10 +26,27 @@ class _PronounsCardState extends State<PronounsCard> {
         .collection("users")
         .doc(Provider.of<UserInformation>(context, listen: false).uid)
         .update({
-      'pronouns': _character.toString(),
+      'pronouns': Provider.of<SelectedPronoun>(context, listen: false).pronoun,
       'step': FieldValue.increment(1),
     });
   }
+
+  Future<void> editApplicationPronoun(onSuccess) async {
+    await db
+        .collection("users")
+        .doc(Provider.of<UserInformation>(context, listen: false).uid)
+        .update({
+      'pronouns': Provider.of<SelectedPronoun>(context, listen: false).pronoun,
+    }).then((value) => onSuccess.call());
+  }
+
+  List<String> pronounList = [
+    'he/him',
+    'she/her',
+    'they/them',
+    'other/prefer not to say',
+    'sample'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -123,117 +139,143 @@ class _PronounsCardState extends State<PronounsCard> {
                                                         255, 114, 114, 114))),
                                         child: SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
-                                            child: Row(children: <Widget>[
-                                              Row(
-                                                children: [
-                                                  Radio<String>(
-                                                    fillColor:
-                                                        MaterialStateColor
-                                                            .resolveWith(
-                                                                (states) =>
-                                                                    Colors
-                                                                        .grey),
-                                                    value: "he/him",
-                                                    groupValue: _character,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        _character = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    "he/him",
-                                                    style: TextStyle(
-                                                        color:
-                                                            step == widget.index
-                                                                ? white
-                                                                : grey),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Radio<String>(
-                                                    fillColor:
-                                                        MaterialStateColor
-                                                            .resolveWith(
-                                                                (states) =>
-                                                                    Colors
-                                                                        .grey),
-                                                    value: "she/her",
-                                                    groupValue: _character,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        _character = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    "she/her",
-                                                    style: TextStyle(
-                                                        color:
-                                                            step == widget.index
-                                                                ? white
-                                                                : grey),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Radio<String>(
-                                                    fillColor:
-                                                        MaterialStateColor
-                                                            .resolveWith(
-                                                                (states) =>
-                                                                    Colors
-                                                                        .grey),
-                                                    value: "they/them",
-                                                    groupValue: _character,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        _character = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    "they/them",
-                                                    style: TextStyle(
-                                                        color:
-                                                            step == widget.index
-                                                                ? white
-                                                                : grey),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Radio<String>(
-                                                    fillColor:
-                                                        MaterialStateColor
-                                                            .resolveWith(
-                                                                (states) =>
-                                                                    Colors
-                                                                        .grey),
-                                                    value:
-                                                        "other/prefer not to say",
-                                                    groupValue: _character,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        _character = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    "other/prefer not to say",
-                                                    style: TextStyle(
-                                                        color:
-                                                            step == widget.index
-                                                                ? white
-                                                                : grey),
-                                                  ),
-                                                ],
-                                              ),
-                                            ])),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: [
+                                                    Radio<String>(
+                                                      fillColor:
+                                                          MaterialStateColor
+                                                              .resolveWith(
+                                                                  (states) =>
+                                                                      Colors
+                                                                          .grey),
+                                                      value: "he/him",
+                                                      groupValue: context
+                                                          .watch<
+                                                              SelectedPronoun>()
+                                                          .pronoun,
+                                                      onChanged:
+                                                          (String? value) {
+                                                        context
+                                                            .read<
+                                                                SelectedPronoun>()
+                                                            .updatePronoun(value
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                    Text(
+                                                      "he/him",
+                                                      style: TextStyle(
+                                                          color: step ==
+                                                                  widget.index
+                                                              ? white
+                                                              : grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Radio<String>(
+                                                      fillColor:
+                                                          MaterialStateColor
+                                                              .resolveWith(
+                                                                  (states) =>
+                                                                      Colors
+                                                                          .grey),
+                                                      value: "she/her",
+                                                      groupValue: context
+                                                          .watch<
+                                                              SelectedPronoun>()
+                                                          .pronoun,
+                                                      onChanged:
+                                                          (String? value) {
+                                                        context
+                                                            .read<
+                                                                SelectedPronoun>()
+                                                            .updatePronoun(value
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                    Text(
+                                                      "she/her",
+                                                      style: TextStyle(
+                                                          color: step ==
+                                                                  widget.index
+                                                              ? white
+                                                              : grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Radio<String>(
+                                                      fillColor:
+                                                          MaterialStateColor
+                                                              .resolveWith(
+                                                                  (states) =>
+                                                                      Colors
+                                                                          .grey),
+                                                      value: "they/them",
+                                                      groupValue: context
+                                                          .watch<
+                                                              SelectedPronoun>()
+                                                          .pronoun,
+                                                      onChanged:
+                                                          (String? value) {
+                                                        context
+                                                            .read<
+                                                                SelectedPronoun>()
+                                                            .updatePronoun(value
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                    Text(
+                                                      "they/them",
+                                                      style: TextStyle(
+                                                          color: step ==
+                                                                  widget.index
+                                                              ? white
+                                                              : grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Radio<String>(
+                                                      fillColor:
+                                                          MaterialStateColor
+                                                              .resolveWith(
+                                                                  (states) =>
+                                                                      Colors
+                                                                          .grey),
+                                                      value:
+                                                          "other/prefer not to say",
+                                                      groupValue: context
+                                                          .watch<
+                                                              SelectedPronoun>()
+                                                          .pronoun,
+                                                      onChanged:
+                                                          (String? value) {
+                                                        context
+                                                            .read<
+                                                                SelectedPronoun>()
+                                                            .updatePronoun(value
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                    Text(
+                                                      "other/prefer not to say",
+                                                      style: TextStyle(
+                                                          color: step ==
+                                                                  widget.index
+                                                              ? white
+                                                              : grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )),
                                       )
                                     : Text(
                                         docInfo,
@@ -268,12 +310,85 @@ class _PronounsCardState extends State<PronounsCard> {
                                         ),
                                       ),
                                       Container(
-                                        margin: const EdgeInsets.only(top: 45),
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: const Text('[Edit]'),
-                                        ),
-                                      )
+                                          margin:
+                                              const EdgeInsets.only(top: 45),
+                                          child: TextButton(
+                                            onPressed: () => showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  Expanded(
+                                                child: AlertDialog(
+                                                  title: const Text(
+                                                      'Choose your pronoun:'),
+                                                  content: SizedBox(
+                                                    width: 400,
+                                                    height: 300,
+                                                    child: GridView.builder(
+                                                        gridDelegate:
+                                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: 1,
+                                                          childAspectRatio: 6,
+                                                        ),
+                                                        itemCount:
+                                                            pronounList.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Row(
+                                                            children: [
+                                                              Radio<String>(
+                                                                value:
+                                                                    pronounList[
+                                                                        index],
+                                                                groupValue: context
+                                                                    .watch<
+                                                                        SelectedPronoun>()
+                                                                    .pronoun,
+                                                                onChanged:
+                                                                    (String?
+                                                                        value) {
+                                                                  context
+                                                                      .read<
+                                                                          SelectedPronoun>()
+                                                                      .updatePronoun(
+                                                                          value
+                                                                              .toString());
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                pronounList[
+                                                                    index],
+                                                                style: const TextStyle(
+                                                                    color:
+                                                                        white),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(context,
+                                                              'Cancel'),
+                                                      child:
+                                                          const Text('Cancel'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        await editApplicationPronoun(
+                                                            () {
+                                                          Navigator.pop(
+                                                              context, 'OK');
+                                                        });
+                                                      },
+                                                      child: const Text('OK'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            child: const Text('[Edit]'),
+                                          ))
                                     ],
                                   ),
                           ],

@@ -26,7 +26,7 @@ class DocumentStatusCard extends StatelessWidget {
             return Container(
                 padding: const EdgeInsets.only(
                     left: 2, right: 16, top: 16, bottom: 16),
-                height: (210 * documents.length).toDouble() -
+                height: (230 * documents.length).toDouble() -
                     (120 * step).toDouble(),
                 color: primary,
                 child: ListView.builder(
@@ -34,7 +34,7 @@ class DocumentStatusCard extends StatelessWidget {
                     itemCount: documents.length,
                     itemBuilder: (BuildContext context, int index) {
                       bool isFocused =
-                          snapshot.data!.docs[0].get('step') == index;
+                          snapshot.data!.docs[0].get('step') >= index;
                       if (index == 0) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:workingauth/pages/auth_page.dart';
 import 'package:workingauth/pages/profile_screen.dart';
+import 'package:workingauth/providers/pronoun_provider.dart';
 import 'package:workingauth/providers/step_provider.dart';
 import './config/firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => UserInformation()),
     ChangeNotifierProvider(create: (_) => FileToUpload()),
     ChangeNotifierProvider(create: (_) => StepNumber()),
+    ChangeNotifierProvider(create: (_) => SelectedPronoun()),
   ], child: const MyApp()));
 }
 

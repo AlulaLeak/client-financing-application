@@ -27,6 +27,22 @@ class WelcomeAndProgressCircle extends StatelessWidget {
     return finalNum;
   }
 
+  String _progressStatement(completedDocuments) {
+    if (completedDocuments == 0) {
+      return "Please start your \n application!";
+    } else if (completedDocuments > 0 && completedDocuments < 20) {
+      return "Way to get started! \n Complete your application below.";
+    } else if (completedDocuments > 20 && completedDocuments < 50) {
+      return "That's good progress! \n Complete your application below.";
+    } else if (completedDocuments == 50) {
+      return "You're half way there! \n Complete your application below.";
+    } else if (completedDocuments > 50 && completedDocuments < 100) {
+      return "You are almost done \n with your application!";
+    } else {
+      return ".......Done!";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -61,9 +77,9 @@ class WelcomeAndProgressCircle extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    "You are almost done \n with your application!",
-                    style: TextStyle(
+                  Text(
+                    _progressStatement(_completedDocuments(snapshot) * 100),
+                    style: const TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.white70,
                       fontSize: 19,

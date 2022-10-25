@@ -134,9 +134,9 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
               margin: const EdgeInsets.only(left: 10),
               width: double.infinity,
               height: 150,
-              decoration: const BoxDecoration(
-                color: primary,
-                borderRadius: BorderRadius.all(Radius.circular(1.0)),
+              decoration: BoxDecoration(
+                color: primary.withOpacity(0.75),
+                borderRadius: const BorderRadius.all(Radius.circular(1.0)),
               ),
               child: docInfo == null
                   ? Column(

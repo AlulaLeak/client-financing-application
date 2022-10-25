@@ -74,6 +74,7 @@ flutter:
     - assets/appainter_theme.json
     - assets/placeholder.jpg
     - assets/yellow-semi.jpeg
+    - assets/black-background.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
-AnimatedContainer slider(images, pagePosition, active) {
+slider(images, pagePosition, active) {
   double margin = active ? 10 : 20;
 
-  return AnimatedContainer(
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOutCubic,
-    margin: EdgeInsets.all(margin),
+  return Container(
+    padding: const EdgeInsets.all(20),
+    margin: const EdgeInsets.all(15.0),
     decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(images[pagePosition]))),
+      border: Border.all(color: Color.fromARGB(255, 121, 94, 72)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
+      color: Colors.white,
+    ),
+    child: const Text(
+        'Your Application is complete! Expect a call back next week or or however this business operates.',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        )),
   );
 }
 
@@ -25,8 +34,8 @@ imageAnimation(PageController animation, images, pagePosition) {
     child: Container(
       margin: const EdgeInsets.all(10),
       child: Column(
-        children: [
-          Image.network(images[pagePosition]),
+        children: const [
+          Text('data'),
         ],
       ),
     ),

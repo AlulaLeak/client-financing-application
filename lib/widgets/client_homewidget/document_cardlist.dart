@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../constants/constants_client_homewidget.dart';
 import './document_card.dart';
+import '../../constants/constants_client_homewidget.dart';
 import '../../constants/constants_documents.dart';
 import 'package:provider/provider.dart';
 import '../../providers/userinfo_provider.dart';
@@ -21,109 +21,125 @@ class DocumentStatusCard extends StatelessWidget {
             .where('uid', isEqualTo: context.watch<UserInformation>().uid)
             .snapshots(),
         builder: (context, snapshot) {
-          int step = snapshot.data!.docs[0].get('step');
+          bool applicationIsCompleted = snapshot.data!.docs[0].get('confirmed');
           if (snapshot.hasData) {
-            return Container(
-                padding: const EdgeInsets.only(
-                    left: 2, right: 16, top: 16, bottom: 16),
-                height: (230 * documents.length).toDouble() -
-                    (120 * step).toDouble(),
-                color: primary,
+            return ConstrainedBox(
+                constraints:
+                    const BoxConstraints(maxHeight: 2000, minHeight: 56.0),
                 child: ListView.builder(
+                    shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: documents.length,
+                    itemCount:
+                        applicationIsCompleted == false ? documents.length : 1,
                     itemBuilder: (BuildContext context, int index) {
                       bool isFocused =
                           snapshot.data!.docs[0].get('step') >= index;
-                      if (index == 0) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Please continue to fill out\nthe following documents:',
+                      if (applicationIsCompleted == false) {
+                        if (index == 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Please continue to fill out\nthe following documents:',
+                                style: TextStyle(
+                                    color: white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: primary),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        } else if (documents[index] == 'date_of_birth') {
+                          if (isFocused) {
+                            return DateOfBirthCard(
+                                index: index,
+                                document: documents[index],
+                                user: snapshot.data);
+                          } else {
+                            return IgnorePointer(
+                              child: DateOfBirthCard(
+                                  index: index,
+                                  document: documents[index],
+                                  user: snapshot.data),
+                            );
+                          }
+                        } else if (documents[index] == 'application_name') {
+                          if (isFocused) {
+                            return NameCard(
+                                index: index,
+                                document: documents[index],
+                                user: snapshot.data);
+                          } else {
+                            return IgnorePointer(
+                              child: NameCard(
+                                  index: index,
+                                  document: documents[index],
+                                  user: snapshot.data),
+                            );
+                          }
+                        } else if (documents[index] == 'pronouns') {
+                          if (isFocused) {
+                            return PronounsCard(
+                                index: index,
+                                document: documents[index],
+                                user: snapshot.data);
+                          } else {
+                            return IgnorePointer(
+                              child: PronounsCard(
+                                  index: index,
+                                  document: documents[index],
+                                  user: snapshot.data),
+                            );
+                          }
+                        } else if (documents[index] == 'confirmed') {
+                          if (isFocused) {
+                            return ConfirmCard(
+                                index: index,
+                                document: documents[index],
+                                user: snapshot.data);
+                          } else {
+                            return IgnorePointer(
+                              child: ConfirmCard(
+                                  index: index,
+                                  document: documents[index],
+                                  user: snapshot.data),
+                            );
+                          }
+                        } else if (documents[index][0] == 'd') {
+                          if (isFocused) {
+                            return DocumentCard(
+                                index: index,
+                                document: documents[index],
+                                user: snapshot.data);
+                          } else {
+                            return IgnorePointer(
+                              child: DocumentCard(
+                                  index: index,
+                                  document: documents[index],
+                                  user: snapshot.data),
+                            );
+                          }
+                        } else {
+                          return const Spacer();
+                        }
+                      } else {
+                        return Container(
+                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(15))),
+                          child: const Text(
+                              'Your Application is complete! Expect a call back next week or or however this business operates.',
                               style: TextStyle(
                                   color: white,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: primary),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                                  fontWeight: FontWeight.w500)),
                         );
-                      } else if (documents[index] == 'date_of_birth') {
-                        if (isFocused) {
-                          return DateOfBirthCard(
-                              index: index,
-                              document: documents[index],
-                              user: snapshot.data);
-                        } else {
-                          return IgnorePointer(
-                            child: DateOfBirthCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data),
-                          );
-                        }
-                      } else if (documents[index] == 'application_name') {
-                        if (isFocused) {
-                          return NameCard(
-                              index: index,
-                              document: documents[index],
-                              user: snapshot.data);
-                        } else {
-                          return IgnorePointer(
-                            child: NameCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data),
-                          );
-                        }
-                      } else if (documents[index] == 'pronouns') {
-                        if (isFocused) {
-                          return PronounsCard(
-                              index: index,
-                              document: documents[index],
-                              user: snapshot.data);
-                        } else {
-                          return IgnorePointer(
-                            child: PronounsCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data),
-                          );
-                        }
-                      } else if (documents[index] == 'confirmed') {
-                        if (isFocused) {
-                          return ConfirmCard(
-                              index: index,
-                              document: documents[index],
-                              user: snapshot.data);
-                        } else {
-                          return IgnorePointer(
-                            child: ConfirmCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data),
-                          );
-                        }
-                      } else if (documents[index][0] == 'd') {
-                        if (isFocused) {
-                          return DocumentCard(
-                              index: index,
-                              document: documents[index],
-                              user: snapshot.data);
-                        } else {
-                          return IgnorePointer(
-                            child: DocumentCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data),
-                          );
-                        }
-                      } else {
-                        return const Spacer();
                       }
                     }));
           } else {

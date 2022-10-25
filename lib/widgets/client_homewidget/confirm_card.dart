@@ -84,18 +84,18 @@ class _ConfirmCardState extends State<ConfirmCard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Please Confirm:",
+                    Text("Please Confirm:",
                         style: TextStyle(
-                            color: white,
+                            color: step == widget.index ? white : grey,
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     const SizedBox(height: 10),
-                    const SizedBox(
+                    SizedBox(
                       width: 300,
                       child: Text(
                           "By clicking 'Confirm', you are hereby acknowleging that all the information above is correct, and your are agreeing to sell you soul to the devil (jkjk.. maybe?).",
                           style: TextStyle(
-                              color: white,
+                              color: step == widget.index ? white : grey,
                               fontSize: 16,
                               fontWeight: FontWeight.w500)),
                     ),
@@ -110,10 +110,10 @@ class _ConfirmCardState extends State<ConfirmCard> {
                                 onPressed: () async {
                                   await updateConfirmation();
                                 },
-                                label: const Text(
+                                label: Text(
                                   'Cancel',
                                   style: TextStyle(
-                                    color: white,
+                                    color: step == widget.index ? white : grey,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -124,10 +124,10 @@ class _ConfirmCardState extends State<ConfirmCard> {
                                 onPressed: () async {
                                   await updateConfirmation();
                                 },
-                                label: const Text(
+                                label: Text(
                                   'Confirm',
                                   style: TextStyle(
-                                    color: white,
+                                    color: step == widget.index ? white : grey,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),

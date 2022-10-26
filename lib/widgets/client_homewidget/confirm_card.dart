@@ -72,83 +72,81 @@ class _ConfirmCardState extends State<ConfirmCard> {
         ),
         Flexible(
           child: Container(
-              padding: const EdgeInsets.only(left: 10, top: 20),
-              margin: const EdgeInsets.only(left: 10),
-              width: double.infinity,
-              height: 200,
-              decoration: const BoxDecoration(
-                color: primary,
-                borderRadius: BorderRadius.all(Radius.circular(1.0)),
-              ),
-              child: Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Please Confirm:",
-                        style: TextStyle(
-                            color: step == widget.index ? white : grey,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500)),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: 300,
-                      child: Text(
-                          "By clicking 'Confirm', you are hereby acknowleging that all the information above is correct, and your are agreeing to sell you soul to the devil (jkjk.. maybe?).",
-                          style: TextStyle(
-                              color: step == widget.index ? white : grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500)),
-                    ),
-                    const SizedBox(height: 10),
-                    docInfo == false
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton.icon(
-                                icon:
-                                    const Icon(Icons.cancel_presentation_sharp),
-                                onPressed: () async {
-                                  await updateConfirmation();
-                                },
-                                label: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                    color: step == widget.index ? white : grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              TextButton.icon(
-                                icon: const Icon(Icons.check),
-                                onPressed: () async {
-                                  await updateConfirmation();
-                                },
-                                label: Text(
-                                  'Confirm',
-                                  style: TextStyle(
-                                    color: step == widget.index ? white : grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Complete!',
+            padding: const EdgeInsets.only(left: 10, top: 20),
+            margin: const EdgeInsets.only(left: 10),
+            width: double.infinity,
+            height: 200,
+            decoration: const BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.all(Radius.circular(1.0)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Please Confirm:",
+                    style: TextStyle(
+                        color: step == widget.index ? white : grey,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500)),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: 300,
+                  child: Text(
+                      "By clicking 'Confirm', you are hereby acknowleging that all the information above is correct, and your are agreeing to sell you soul to the devil (jkjk.. maybe?).",
+                      style: TextStyle(
+                          color: step == widget.index ? white : grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500)),
+                ),
+                const SizedBox(height: 10),
+                docInfo == false
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton.icon(
+                            icon: const Icon(Icons.cancel_presentation_sharp),
+                            onPressed: () async {
+                              await updateConfirmation();
+                            },
+                            label: Text(
+                              'Cancel',
                               style: TextStyle(
-                                color: green,
+                                color: step == widget.index ? white : grey,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                  ],
-                ),
-              )),
+                          TextButton.icon(
+                            icon: const Icon(Icons.check),
+                            onPressed: () async {
+                              await updateConfirmation();
+                            },
+                            label: Text(
+                              'Confirm',
+                              style: TextStyle(
+                                color: step == widget.index ? white : grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Complete!',
+                          style: TextStyle(
+                            color: green,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+          ),
         ),
       ],
     );

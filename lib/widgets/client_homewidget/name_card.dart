@@ -93,155 +93,151 @@ class _NameCardState extends State<NameCard> {
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      docInfo == null
-                          ? const Text(
-                              "Please enter your name here:",
-                              style: TextStyle(
-                                  color: white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          : const Text(
-                              "Your full name is:",
-                              style: TextStyle(
-                                  color: white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                      const SizedBox(height: 3),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              width: 200,
-                              child: docInfo == null
-                                  ? TextField(
-                                      controller: nameController,
-                                      obscureText: false,
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                          color: white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          borderSide: const BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 114, 114, 114),
-                                              width: 1),
-                                        ),
-                                        hintText: _validate
-                                            ? 'Value Can\'t Be Empty'
-                                            : 'Full Name',
-                                        hintStyle: TextStyle(
-                                            color: _validate
-                                                ? Colors.red
-                                                : Colors.grey),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    docInfo == null
+                        ? const Text(
+                            "Please enter your name here:",
+                            style: TextStyle(
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          )
+                        : const Text(
+                            "Your full name is:",
+                            style: TextStyle(
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          ),
+                    const SizedBox(height: 3),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width: 200,
+                            child: docInfo == null
+                                ? TextField(
+                                    controller: nameController,
+                                    obscureText: false,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                        color: white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                        borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 114, 114, 114),
+                                            width: 1),
                                       ),
-                                    )
-                                  : Text(
-                                      docInfo,
-                                      style: const TextStyle(
-                                          color: white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    )),
-                          const SizedBox(width: 15),
-                          docInfo == null
-                              ? ElevatedButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      nameController.text == ""
-                                          ? _validate = true
-                                          : _validate = false;
-                                    });
-                                    if (nameController.text != "") {
-                                      await updateApplicationName();
-                                    }
-                                  },
-                                  child: const Text('Submit'),
-                                )
-                              : Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Text(
-                                      'Complete!',
-                                      style: TextStyle(
-                                        color: green,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      hintText: _validate
+                                          ? 'Value Can\'t Be Empty'
+                                          : 'Full Name',
+                                      hintStyle: TextStyle(
+                                          color: _validate
+                                              ? Colors.red
+                                              : Colors.grey),
                                     ),
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 45),
-                                      child: TextButton(
-                                        onPressed: () => showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                            title:
-                                                const Text('Enter a new name:'),
-                                            content: TextField(
-                                              controller: nameController,
-                                              obscureText: false,
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                  color: white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500),
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: const BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 114, 114, 114),
-                                                      width: 1),
-                                                ),
-                                                hintText: _validate
-                                                    ? 'Value Can\'t Be Empty'
-                                                    : 'Full Name',
-                                                hintStyle: TextStyle(
-                                                    color: _validate
-                                                        ? Colors.red
-                                                        : Colors.grey),
+                                  )
+                                : Text(
+                                    docInfo,
+                                    style: const TextStyle(
+                                        color: white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                        const SizedBox(width: 15),
+                        docInfo == null
+                            ? ElevatedButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    nameController.text == ""
+                                        ? _validate = true
+                                        : _validate = false;
+                                  });
+                                  if (nameController.text != "") {
+                                    await updateApplicationName();
+                                  }
+                                },
+                                child: const Text('Submit'),
+                              )
+                            : Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  const Text(
+                                    'Complete!',
+                                    style: TextStyle(
+                                      color: green,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 45),
+                                    child: TextButton(
+                                      onPressed: () => showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title:
+                                              const Text('Enter a new name:'),
+                                          content: TextField(
+                                            controller: nameController,
+                                            obscureText: false,
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                color: white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 114, 114, 114),
+                                                    width: 1),
                                               ),
+                                              hintText: _validate
+                                                  ? 'Value Can\'t Be Empty'
+                                                  : 'Full Name',
+                                              hintStyle: TextStyle(
+                                                  color: _validate
+                                                      ? Colors.red
+                                                      : Colors.grey),
                                             ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'Cancel'),
-                                                child: const Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  await editApplicationName(() {
-                                                    Navigator.pop(
-                                                        context, 'OK');
-                                                  });
-                                                },
-                                                child: const Text('OK'),
-                                              ),
-                                            ],
                                           ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                await editApplicationName(() {
+                                                  Navigator.pop(context, 'OK');
+                                                });
+                                              },
+                                              child: const Text('OK'),
+                                            ),
+                                          ],
                                         ),
-                                        child: const Text('[Edit]'),
                                       ),
-                                    )
-                                  ],
-                                ),
-                        ],
-                      )
-                    ],
-                  ),
+                                      child: const Text('[Edit]'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                      ],
+                    )
+                  ],
                 ),
               ],
             ),

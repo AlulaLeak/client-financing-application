@@ -169,44 +169,42 @@ class _DateOfBirthCardState extends State<DateOfBirthCard>
                                 color: white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500)),
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: 200,
-                                child: Text(docInfo.toString(),
-                                    style: const TextStyle(
-                                        color: white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500)),
-                              ),
-                              Stack(
-                                alignment: AlignmentDirectional.center,
-                                children: [
-                                  const Text(
-                                    'Complete!',
-                                    style: TextStyle(
-                                      color: green,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              child: Text(docInfo.toString(),
+                                  style: const TextStyle(
+                                      color: white,
                                       fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                const Text(
+                                  'Complete!',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 45),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        _restorableDatePickerRouteFuture
-                                            .present();
-                                      },
-                                      child: const Text('[Edit]'),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 45),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      _restorableDatePickerRouteFuture
+                                          .present();
+                                    },
+                                    child: const Text('[Edit]'),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     )),

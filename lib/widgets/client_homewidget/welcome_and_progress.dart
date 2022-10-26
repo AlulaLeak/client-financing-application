@@ -31,11 +31,11 @@ class WelcomeAndProgressCircle extends StatelessWidget {
     if (completedDocuments == 0) {
       return "Please start your \n application!";
     } else if (completedDocuments > 0 && completedDocuments < 20) {
-      return "Way to get started! \n Complete your application below.";
+      return "Way to get started! \n Complete your \n application below.";
     } else if (completedDocuments > 20 && completedDocuments < 50) {
-      return "That's good progress! \n Complete your application below.";
+      return "That's good progress! \n Complete your \n application below.";
     } else if (completedDocuments == 50) {
-      return "You're half way there! \n Complete your application below.";
+      return "You're half way there! \n Complete your \n application below.";
     } else if (completedDocuments > 50 && completedDocuments < 100) {
       return "You are almost done \n with your application!";
     } else {
@@ -117,7 +117,10 @@ class WelcomeAndProgressCircle extends StatelessWidget {
             ],
           );
         } else {
-          return const CircularProgressIndicator();
+          return Container(
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(),
+          );
         }
       },
     );

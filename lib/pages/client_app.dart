@@ -63,7 +63,7 @@ class ClientApp extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return FutureBuilder(
           future: bar(snapshot),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snap) {
             return Scaffold(
                 appBar: AppBar(
                   title: const Text("Financing Application"),

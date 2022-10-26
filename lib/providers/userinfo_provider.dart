@@ -26,6 +26,9 @@ class UserInformation with ChangeNotifier {
     }
     _email = user.email;
     _uid = user.uid;
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
     notifyListeners();
+    // });
   }
 }

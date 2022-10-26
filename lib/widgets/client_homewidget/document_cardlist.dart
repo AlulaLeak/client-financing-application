@@ -21,8 +21,9 @@ class DocumentStatusCard extends StatelessWidget {
             .where('uid', isEqualTo: context.watch<UserInformation>().uid)
             .snapshots(),
         builder: (context, snapshot) {
-          bool applicationIsCompleted = snapshot.data!.docs[0].get('confirmed');
           if (snapshot.hasData) {
+            bool applicationIsCompleted =
+                snapshot.data!.docs[0].get('confirmed');
             return ConstrainedBox(
                 constraints:
                     const BoxConstraints(maxHeight: 2000, minHeight: 56.0),

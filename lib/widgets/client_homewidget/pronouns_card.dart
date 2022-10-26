@@ -316,75 +316,73 @@ class _PronounsCardState extends State<PronounsCard> {
                                             onPressed: () => showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) =>
-                                                  Expanded(
-                                                child: AlertDialog(
-                                                  title: const Text(
-                                                      'Choose your pronoun:'),
-                                                  content: SizedBox(
-                                                    width: 400,
-                                                    height: 300,
-                                                    child: GridView.builder(
-                                                        gridDelegate:
-                                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 1,
-                                                          childAspectRatio: 6,
-                                                        ),
-                                                        itemCount:
-                                                            pronounList.length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return Row(
-                                                            children: [
-                                                              Radio<String>(
-                                                                value:
-                                                                    pronounList[
-                                                                        index],
-                                                                groupValue: context
-                                                                    .watch<
+                                                  AlertDialog(
+                                                title: const Text(
+                                                    'Choose your pronoun:'),
+                                                content: SizedBox(
+                                                  width: 400,
+                                                  height: 300,
+                                                  child: GridView.builder(
+                                                      gridDelegate:
+                                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 1,
+                                                        childAspectRatio: 6,
+                                                      ),
+                                                      itemCount:
+                                                          pronounList.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Row(
+                                                          children: [
+                                                            Radio<String>(
+                                                              value:
+                                                                  pronounList[
+                                                                      index],
+                                                              groupValue: context
+                                                                  .watch<
+                                                                      SelectedPronoun>()
+                                                                  .pronoun,
+                                                              onChanged:
+                                                                  (String?
+                                                                      value) {
+                                                                context
+                                                                    .read<
                                                                         SelectedPronoun>()
-                                                                    .pronoun,
-                                                                onChanged:
-                                                                    (String?
-                                                                        value) {
-                                                                  context
-                                                                      .read<
-                                                                          SelectedPronoun>()
-                                                                      .updatePronoun(
-                                                                          value
-                                                                              .toString());
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                pronounList[
-                                                                    index],
-                                                                style: const TextStyle(
-                                                                    color:
-                                                                        white),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        }),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(context,
-                                                              'Cancel'),
-                                                      child:
-                                                          const Text('Cancel'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        await editApplicationPronoun(
-                                                            () {
-                                                          Navigator.pop(
-                                                              context, 'OK');
-                                                        });
-                                                      },
-                                                      child: const Text('OK'),
-                                                    ),
-                                                  ],
+                                                                    .updatePronoun(
+                                                                        value
+                                                                            .toString());
+                                                              },
+                                                            ),
+                                                            Text(
+                                                              pronounList[
+                                                                  index],
+                                                              style:
+                                                                  const TextStyle(
+                                                                      color:
+                                                                          white),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      }),
                                                 ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context, 'Cancel'),
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      await editApplicationPronoun(
+                                                          () {
+                                                        Navigator.pop(
+                                                            context, 'OK');
+                                                      });
+                                                    },
+                                                    child: const Text('OK'),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             child: const Text('[Edit]'),

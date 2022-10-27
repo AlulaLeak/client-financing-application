@@ -27,7 +27,7 @@ class _PictureSliderState extends State<PictureSlider> {
           width: MediaQuery.of(context).size.width,
           height: 200,
           child: PageView.builder(
-              itemCount: images.length,
+              itemCount: 2,
               pageSnapping: true,
               controller: _pageController,
               onPageChanged: (page) {

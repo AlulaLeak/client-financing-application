@@ -16,6 +16,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // WidgetsBinding.instance.addPostFrameCallback((_) {
+  // });
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => BottomNavSelect()),
     ChangeNotifierProvider(create: (_) => UserInformation()),
@@ -45,6 +48,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// WidgetsBinding.instance.addPostFrameCallback((_) {
-// });

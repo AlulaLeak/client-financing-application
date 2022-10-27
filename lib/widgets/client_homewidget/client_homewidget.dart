@@ -14,7 +14,7 @@ class ClientHomeWidget extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/black-background.jpeg"),
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
                 repeat: ImageRepeat.repeat)),
         child: SingleChildScrollView(
           child: Stack(

@@ -1,5 +1,5 @@
 List<String> documents = [
-  '',
+  'empty',
   "application_name",
   "pronouns",
   "date_of_birth",

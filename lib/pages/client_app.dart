@@ -8,11 +8,17 @@ import '../widgets/side_menu.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/profile_icon.dart';
 
-class ClientApp extends StatelessWidget {
-  ClientApp({super.key});
+class ClientApp extends StatefulWidget {
+  const ClientApp({super.key});
 
+  @override
+  State<ClientApp> createState() => _ClientAppState();
+}
+
+class _ClientAppState extends State<ClientApp> {
   final List<Widget> _widgetOptions = <Widget>[
     const ClientHomeWidget(),
+    // const Text('data'),
     const Center(
       child: Text('Client App Page 2'),
     ),
@@ -50,7 +56,7 @@ class ClientApp extends StatelessWidget {
             "step": 1,
             "created_at": DateTime.now(),
           };
-          db
+          await db
               .collection("users")
               .doc(context.read<UserInformation>().uid)
               .set(user);
@@ -64,7 +70,8 @@ class ClientApp extends StatelessWidget {
         return FutureBuilder(
           future: bar(snapshot),
           builder: (BuildContext context, AsyncSnapshot snap) {
-            return Scaffold(
+            if (snap.connectionState != ConnectionState.done) {
+              return Scaffold(
                 appBar: AppBar(
                   title: const Text("Financing Application"),
                   actions: [
@@ -77,10 +84,28 @@ class ClientApp extends StatelessWidget {
                     ),
                   ],
                 ),
-                body: _widgetOptions
-                    .elementAt(context.watch<BottomNavSelect>().selectedIndex),
+                body: const Center(child: CircularProgressIndicator()),
                 drawer: const SideMenu(),
-                bottomNavigationBar: const BottomNavBar());
+                bottomNavigationBar: const BottomNavBar(),
+              );
+            }
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Financing Application"),
+                actions: [
+                  IconButton(
+                      onPressed: () {}, icon: const Icon(Icons.notifications)),
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: const ProfileIcon(),
+                  ),
+                ],
+              ),
+              body: _widgetOptions
+                  .elementAt(context.watch<BottomNavSelect>().selectedIndex),
+              drawer: const SideMenu(),
+              bottomNavigationBar: const BottomNavBar(),
+            );
           },
         );
       },

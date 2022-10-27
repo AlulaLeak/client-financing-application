@@ -121,6 +121,7 @@ class _PronounsCardState extends State<PronounsCard> {
                                   fontWeight: FontWeight.w500)),
                       const SizedBox(height: 7),
                       Scrollbar(
+                        controller: ScrollController(initialScrollOffset: 0),
                         thumbVisibility: docInfo == null,
                         child: Row(
                           children: [

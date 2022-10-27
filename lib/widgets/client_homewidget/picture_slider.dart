@@ -16,7 +16,7 @@ class _PictureSliderState extends State<PictureSlider> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(viewportFraction: 0.8, initialPage: 1);
+    _pageController = PageController(viewportFraction: 0.8, initialPage: 0);
   }
 
   @override

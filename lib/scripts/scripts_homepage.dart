@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 slider(images, pagePosition, active) {
-  double margin = active ? 10 : 20;
-
   return Container(
     padding: const EdgeInsets.all(20),
     margin: const EdgeInsets.all(15.0),
     decoration: BoxDecoration(
-      border: Border.all(color: Color.fromARGB(255, 121, 94, 72)),
+      border: Border.all(color: const Color.fromARGB(255, 121, 94, 72)),
       borderRadius: const BorderRadius.all(Radius.circular(5)),
       color: Colors.white,
     ),
-    child: const Text(
-        'Your Application is complete! Expect a call back next week or or however this business operates.',
-        style: TextStyle(
+    child: Text(
+        pagePosition == 1
+            ? 'repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis modisapiente officiis modi.'
+            : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mmolestiae quas vel sint commodi',
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 22,
           fontWeight: FontWeight.bold,

@@ -18,7 +18,6 @@ class ClientApp extends StatefulWidget {
 class _ClientAppState extends State<ClientApp> {
   final List<Widget> _widgetOptions = <Widget>[
     const ClientHomeWidget(),
-    // const Text('data'),
     const Center(
       child: Text('Client App Page 2'),
     ),
@@ -104,7 +103,6 @@ class _ClientAppState extends State<ClientApp> {
               body: _widgetOptions
                   .elementAt(context.watch<BottomNavSelect>().selectedIndex),
               drawer: const SideMenu(),
-              bottomNavigationBar: const BottomNavBar(),
             );
           },
         );

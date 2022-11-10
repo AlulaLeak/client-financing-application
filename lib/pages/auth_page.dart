@@ -22,7 +22,7 @@ class Auth extends StatelessWidget {
                   .read<UserInformation>()
                   .updateUserInfo(snapshot.data!),
               builder: (BuildContext context, AsyncSnapshot snap) {
-                return ClientApp();
+                return const ClientApp();
               },
             );
           } else {

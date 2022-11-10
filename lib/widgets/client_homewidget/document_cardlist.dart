@@ -54,47 +54,20 @@ class DocumentStatusCard extends StatelessWidget {
                             ],
                           );
                         } else if (documents[index] == 'date_of_birth') {
-                          if (isFocused) {
-                            return DateOfBirthCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data);
-                          } else {
-                            return IgnorePointer(
-                              child: DateOfBirthCard(
-                                  index: index,
-                                  document: documents[index],
-                                  user: snapshot.data),
-                            );
-                          }
+                          return DateOfBirthCard(
+                              index: index,
+                              document: documents[index],
+                              user: snapshot.data);
                         } else if (documents[index] == 'application_name') {
-                          if (isFocused) {
-                            return NameCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data);
-                          } else {
-                            return IgnorePointer(
-                              child: NameCard(
-                                  index: index,
-                                  document: documents[index],
-                                  user: snapshot.data),
-                            );
-                          }
+                          return NameCard(
+                              index: index,
+                              document: documents[index],
+                              user: snapshot.data);
                         } else if (documents[index] == 'pronouns') {
-                          if (isFocused) {
-                            return PronounsCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data);
-                          } else {
-                            return IgnorePointer(
-                              child: PronounsCard(
-                                  index: index,
-                                  document: documents[index],
-                                  user: snapshot.data),
-                            );
-                          }
+                          return PronounsCard(
+                              index: index,
+                              document: documents[index],
+                              user: snapshot.data);
                         } else if (documents[index] == 'confirmed') {
                           if (isFocused) {
                             return ConfirmCard(
@@ -103,26 +76,16 @@ class DocumentStatusCard extends StatelessWidget {
                                 user: snapshot.data);
                           } else {
                             return IgnorePointer(
-                              child: ConfirmCard(
-                                  index: index,
-                                  document: documents[index],
-                                  user: snapshot.data),
-                            );
+                                child: ConfirmCard(
+                                    index: index,
+                                    document: documents[index],
+                                    user: snapshot.data));
                           }
                         } else if (documents[index][0] == 'd') {
-                          if (isFocused) {
-                            return DocumentCard(
-                                index: index,
-                                document: documents[index],
-                                user: snapshot.data);
-                          } else {
-                            return IgnorePointer(
-                              child: DocumentCard(
-                                  index: index,
-                                  document: documents[index],
-                                  user: snapshot.data),
-                            );
-                          }
+                          return DocumentCard(
+                              index: index,
+                              document: documents[index],
+                              user: snapshot.data);
                         } else {
                           return const Spacer();
                         }

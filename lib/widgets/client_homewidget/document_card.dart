@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../constants/constants_client_homewidget.dart';
 import 'package:file_picker/file_picker.dart';
-import '../upload_confirmation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
-class DocumentCard extends StatefulWidget {
+class DocumentCard extends StatelessWidget {
   const DocumentCard({Key? key, this.index = 0, this.document, this.user})
       : super(key: key);
 
@@ -14,50 +14,9 @@ class DocumentCard extends StatefulWidget {
   final QuerySnapshot<Object?>? user;
 
   @override
-  State<DocumentCard> createState() => _DocumentCardState();
-}
-
-class _DocumentCardState extends State<DocumentCard> {
-  String _fileName = '';
-  String _filePath = '';
-  late Uint8List _bytes;
-
-  Future<void> _setFile(
-    String fileName,
-    String? filePath,
-    Uint8List? bytes,
-  ) async {
-    setState(() {
-      _fileName = fileName;
-      _filePath = filePath ?? '';
-      _bytes = bytes ?? Uint8List(0);
-    });
-  }
-
-  Future myAsyncMethod(setFile, VoidCallback onSuccess) async {
-    final picked = await FilePicker.platform
-        .pickFiles(type: FileType.any, withReadStream: true);
-    if (picked != null) {
-      if (kIsWeb) {
-        await _setFile(
-          picked.files.single.name,
-          '',
-          picked.files.single.bytes,
-        ).then((value) => onSuccess.call());
-      } else {
-        await _setFile(
-          picked.files.single.name,
-          picked.files.single.path,
-          Uint8List(0),
-        ).then((value) => onSuccess.call());
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    String? docInfo = widget.user!.docs[0].get(widget.document.toString());
-    int step = widget.user!.docs[0].get('step');
+    String? docInfo = user!.docs[0].get(document.toString());
+    int step = user!.docs[0].get('step');
 
     return Row(
       children: [
@@ -75,7 +34,7 @@ class _DocumentCardState extends State<DocumentCard> {
                     color: Colors.green,
                     size: 35,
                   )
-                : step == widget.index
+                : step == index
                     ? Icon(
                         Icons.add_circle,
                         color: Colors.grey.shade200,
@@ -108,12 +67,12 @@ class _DocumentCardState extends State<DocumentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 docInfo == null
-                    ? Text("Please upload your ${widget.document}:",
+                    ? Text("Please upload your $document:",
                         style: TextStyle(
-                            color: step == widget.index ? white : grey,
+                            color: step == index ? white : grey,
                             fontSize: 20,
                             fontWeight: FontWeight.w500))
-                    : Text('Your ${widget.document}:',
+                    : Text('Your $document:',
                         style: const TextStyle(
                             color: white,
                             fontSize: 20,
@@ -130,7 +89,7 @@ class _DocumentCardState extends State<DocumentCard> {
                               ? Text(
                                   "Placeholder for an explanation of the file that needs to be uploaded here",
                                   style: TextStyle(
-                                      color: step == widget.index
+                                      color: step == index
                                           ? Colors.grey.shade300
                                           : grey,
                                       fontSize: 12,
@@ -148,34 +107,74 @@ class _DocumentCardState extends State<DocumentCard> {
                     ),
                     const Spacer(),
                     Column(children: [
-                      widget.user!.docs[0].get(widget.document.toString()) ==
-                              null
+                      user!.docs[0].get(document.toString()) == null
                           ? OutlinedButton(
                               onPressed: () async {
-                                myAsyncMethod(_setFile, () async {
-                                  if (kIsWeb) {
-                                    await uploadConfirmation(
-                                        context,
-                                        _fileName,
-                                        widget.document,
-                                        _bytes,
-                                        _filePath,
-                                        docInfo);
-                                  } else {
-                                    await uploadConfirmation(
-                                        context,
-                                        _fileName,
-                                        widget.document,
-                                        _bytes,
-                                        _filePath,
-                                        docInfo);
-                                  }
-                                });
+                                final picked =
+                                    await FilePicker.platform.pickFiles();
+                                if (picked != null) {
+                                  Widget cancelButton = TextButton(
+                                    child: const Text("Cancel"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                  Widget uploadButton = TextButton(
+                                    child: const Text("Upload file"),
+                                    onPressed: () async {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user!.docs[0].get('uid'))
+                                          .update({
+                                        document.toString():
+                                            picked.files.single.name.toString(),
+                                        'step': FieldValue.increment(
+                                            docInfo == null ? 1 : 0)
+                                      });
+
+                                      final storage = FirebaseStorage.instanceFor(
+                                          bucket:
+                                              "gs://workingauth.appspot.com");
+                                      final ref = storage
+                                          .ref()
+                                          .child(user!.docs[0].get('uid'))
+                                          .child(document.toString())
+                                          .child(picked.files.single.name);
+                                      final metadata = SettableMetadata(
+                                        customMetadata: {
+                                          'picked-file-path': picked
+                                              .files.single.path
+                                              .toString()
+                                        },
+                                      );
+                                      ref.putFile(
+                                          File(picked.files.single.path
+                                              .toString()),
+                                          metadata);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                  AlertDialog alert = AlertDialog(
+                                    title: const Text("Notice"),
+                                    content: const Text(
+                                        "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
+                                    actions: [
+                                      cancelButton,
+                                      uploadButton,
+                                    ],
+                                  );
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    },
+                                  );
+                                }
                               },
                               child: Text(
                                 'Upload',
                                 style: TextStyle(
-                                  color: step == widget.index ? white : grey,
+                                  color: step == index ? white : grey,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -196,25 +195,69 @@ class _DocumentCardState extends State<DocumentCard> {
                                   margin: const EdgeInsets.only(top: 45),
                                   child: TextButton(
                                     onPressed: () async {
-                                      myAsyncMethod(_setFile, () async {
-                                        if (kIsWeb) {
-                                          await uploadConfirmation(
-                                              context,
-                                              _fileName,
-                                              widget.document,
-                                              _bytes,
-                                              _filePath,
-                                              docInfo);
-                                        } else {
-                                          await uploadConfirmation(
-                                              context,
-                                              _fileName,
-                                              widget.document,
-                                              _bytes,
-                                              _filePath,
-                                              docInfo);
-                                        }
-                                      });
+                                      final picked =
+                                          await FilePicker.platform.pickFiles();
+                                      if (picked != null) {
+                                        Widget cancelButton = TextButton(
+                                          child: const Text("Cancel"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        );
+                                        Widget uploadButton = TextButton(
+                                          child: const Text("Upload file"),
+                                          onPressed: () async {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(user!.docs[0].get('uid'))
+                                                .update({
+                                              document.toString(): picked
+                                                  .files.single.name
+                                                  .toString(),
+                                              'step': FieldValue.increment(
+                                                  docInfo == null ? 1 : 0)
+                                            });
+
+                                            final storage =
+                                                FirebaseStorage.instanceFor(
+                                                    bucket:
+                                                        "gs://workingauth.appspot.com");
+                                            final ref = storage
+                                                .ref()
+                                                .child(user!.docs[0].get('uid'))
+                                                .child(document.toString())
+                                                .child(
+                                                    picked.files.single.name);
+                                            final metadata = SettableMetadata(
+                                              customMetadata: {
+                                                'picked-file-path': picked
+                                                    .files.single.path
+                                                    .toString()
+                                              },
+                                            );
+                                            ref.putFile(
+                                                File(picked.files.single.path
+                                                    .toString()),
+                                                metadata);
+                                            Navigator.pop(context);
+                                          },
+                                        );
+                                        AlertDialog alert = AlertDialog(
+                                          title: const Text("Notice"),
+                                          content: const Text(
+                                              "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
+                                          actions: [
+                                            cancelButton,
+                                            uploadButton,
+                                          ],
+                                        );
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return alert;
+                                          },
+                                        );
+                                      }
                                     },
                                     child: const Text('[Edit]'),
                                   ),

@@ -87,7 +87,7 @@ class DocumentStatusCard extends StatelessWidget {
                               document: documents[index],
                               user: snapshot.data);
                         } else {
-                          return const Spacer();
+                          return const SizedBox();
                         }
                       } else {
                         return Container(

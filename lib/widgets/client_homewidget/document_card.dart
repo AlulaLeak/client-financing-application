@@ -17,6 +17,59 @@ class DocumentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String? docInfo = user!.docs[0].get(document.toString());
     int step = user!.docs[0].get('step');
+    void uploadFiles() async {
+      final picked = await FilePicker.platform.pickFiles();
+      if (picked != null) {
+        Widget cancelButton = TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+        Widget uploadButton = TextButton(
+          child: const Text("Upload file"),
+          onPressed: () async {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(user!.docs[0].get('uid'))
+                .update({
+              document.toString(): picked.files.single.name.toString(),
+              'step': FieldValue.increment(docInfo == null ? 1 : 0)
+            });
+
+            final storage = FirebaseStorage.instanceFor(
+                bucket: "gs://workingauth.appspot.com");
+            final ref = storage
+                .ref()
+                .child(user!.docs[0].get('uid'))
+                .child(document.toString())
+                .child(picked.files.single.name);
+            final metadata = SettableMetadata(
+              customMetadata: {
+                'picked-file-path': picked.files.single.path.toString()
+              },
+            );
+            ref.putFile(File(picked.files.single.path.toString()), metadata);
+            Navigator.pop(context);
+          },
+        );
+        AlertDialog alert = AlertDialog(
+          title: const Text("Notice"),
+          content: const Text(
+              "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
+          actions: [
+            cancelButton,
+            uploadButton,
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    }
 
     return Row(
       children: [
@@ -109,68 +162,7 @@ class DocumentCard extends StatelessWidget {
                     Column(children: [
                       user!.docs[0].get(document.toString()) == null
                           ? OutlinedButton(
-                              onPressed: () async {
-                                final picked =
-                                    await FilePicker.platform.pickFiles();
-                                if (picked != null) {
-                                  Widget cancelButton = TextButton(
-                                    child: const Text("Cancel"),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  );
-                                  Widget uploadButton = TextButton(
-                                    child: const Text("Upload file"),
-                                    onPressed: () async {
-                                      FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(user!.docs[0].get('uid'))
-                                          .update({
-                                        document.toString():
-                                            picked.files.single.name.toString(),
-                                        'step': FieldValue.increment(
-                                            docInfo == null ? 1 : 0)
-                                      });
-
-                                      final storage = FirebaseStorage.instanceFor(
-                                          bucket:
-                                              "gs://workingauth.appspot.com");
-                                      final ref = storage
-                                          .ref()
-                                          .child(user!.docs[0].get('uid'))
-                                          .child(document.toString())
-                                          .child(picked.files.single.name);
-                                      final metadata = SettableMetadata(
-                                        customMetadata: {
-                                          'picked-file-path': picked
-                                              .files.single.path
-                                              .toString()
-                                        },
-                                      );
-                                      ref.putFile(
-                                          File(picked.files.single.path
-                                              .toString()),
-                                          metadata);
-                                      Navigator.pop(context);
-                                    },
-                                  );
-                                  AlertDialog alert = AlertDialog(
-                                    title: const Text("Notice"),
-                                    content: const Text(
-                                        "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
-                                    actions: [
-                                      cancelButton,
-                                      uploadButton,
-                                    ],
-                                  );
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return alert;
-                                    },
-                                  );
-                                }
-                              },
+                              onPressed: uploadFiles,
                               child: Text(
                                 'Upload',
                                 style: TextStyle(
@@ -194,71 +186,7 @@ class DocumentCard extends StatelessWidget {
                                 Container(
                                   margin: const EdgeInsets.only(top: 45),
                                   child: TextButton(
-                                    onPressed: () async {
-                                      final picked =
-                                          await FilePicker.platform.pickFiles();
-                                      if (picked != null) {
-                                        Widget cancelButton = TextButton(
-                                          child: const Text("Cancel"),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        );
-                                        Widget uploadButton = TextButton(
-                                          child: const Text("Upload file"),
-                                          onPressed: () async {
-                                            FirebaseFirestore.instance
-                                                .collection('users')
-                                                .doc(user!.docs[0].get('uid'))
-                                                .update({
-                                              document.toString(): picked
-                                                  .files.single.name
-                                                  .toString(),
-                                              'step': FieldValue.increment(
-                                                  docInfo == null ? 1 : 0)
-                                            });
-
-                                            final storage =
-                                                FirebaseStorage.instanceFor(
-                                                    bucket:
-                                                        "gs://workingauth.appspot.com");
-                                            final ref = storage
-                                                .ref()
-                                                .child(user!.docs[0].get('uid'))
-                                                .child(document.toString())
-                                                .child(
-                                                    picked.files.single.name);
-                                            final metadata = SettableMetadata(
-                                              customMetadata: {
-                                                'picked-file-path': picked
-                                                    .files.single.path
-                                                    .toString()
-                                              },
-                                            );
-                                            ref.putFile(
-                                                File(picked.files.single.path
-                                                    .toString()),
-                                                metadata);
-                                            Navigator.pop(context);
-                                          },
-                                        );
-                                        AlertDialog alert = AlertDialog(
-                                          title: const Text("Notice"),
-                                          content: const Text(
-                                              "Is this the file that you wish to upload? You may also change your chosen file before your final confirmation."),
-                                          actions: [
-                                            cancelButton,
-                                            uploadButton,
-                                          ],
-                                        );
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return alert;
-                                          },
-                                        );
-                                      }
-                                    },
+                                    onPressed: uploadFiles,
                                     child: const Text('[Edit]'),
                                   ),
                                 )
